@@ -24,12 +24,16 @@ const Partners = () => {
         breakpoint: 600,
         settings: {
           slidesToShow: 3,
+          speed: 5000, 
+          autoplaySpeed: 0,
         },
       },
       {
         breakpoint: 480,
         settings: {
           slidesToShow: 2,
+          speed: 3000, 
+          autoplaySpeed: 0,
         },
       },
     ],
