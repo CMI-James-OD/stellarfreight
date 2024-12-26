@@ -21,7 +21,7 @@ const App = () => {
   return (
     <div className="app selection:bg-orange-450 selection:text-white">
       <Router>
-      <Toaster position="top-right" richColors  />
+      <Toaster position="top-right" richColors />
         <Routes>
           <Route path="/admin" element={<AdminLogin />} />
           <Route path="/admin-dashboard" element={<AdminDashboard />} />
