@@ -147,3 +147,25 @@ export const moreServices = [
       "Sea Wave Logistics Rail Freight services have been designed for those clients who require a safe and efficient way to move their cargo from places in mint condition.",
   },
 ];
+export const teamMembers = [
+  {
+    name: "Walter Blair",
+    position: "Shipping And Logistics",
+    image: "/images/walter-blair.jpg",
+  },
+  {
+    name: "Garreth Paul",
+    position: "Parcel Packaging And Safety",
+    image: "/images/garreth-paul.jpg",
+  },
+  {
+    name: "Amanda Anderson",
+    position: "Customer Care Unit",
+    image: "/images/amanda-anderson.jpg",
+  },
+  {
+    name: "John D. Tyler",
+    position: "Warehousing And Local Transport",
+    image: "/images/john-d-tyler.jpg",
+  },
+];

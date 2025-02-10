@@ -1,51 +1,42 @@
-import React, { useEffect } from "react";
-import AOS from "aos";
-import "aos/dist/aos.css";
-
-const teamMembers = [
-  {
-    name: "Walter Blair",
-    position: "Shipping And Logistics",
-    image: "/images/walter-blair.jpg",
-  },
-  {
-    name: "Garreth Paul",
-    position: "Parcel Packaging And Safety",
-    image: "/images/garreth-paul.jpg",
-  },
-  {
-    name: "Amanda Anderson",
-    position: "Customer Care Unit",
-    image: "/images/amanda-anderson.jpg",
-  },
-  {
-    name: "John D. Tyler",
-    position: "Warehousing And Local Transport",
-    image: "/images/john-d-tyler.jpg",
-  },
-];
+import React from "react";
+import { motion } from "framer-motion";
+import { teamMembers } from "../data/home";
 
 const TeamComponent = () => {
-  useEffect(() => {
-    AOS.init({ duration: 1000, offset: 200, easing: "ease-in-out" });
-  }, []);
-
   return (
-    <div className=" w-full lg:px-24 px-4 py-20">
-      <h2 className="text-3xl font-bold mb-4" data-aos="fade-up">
+    <div className="w-full lg:px-24 px-4 py-20">
+      <motion.h2
+        className="text-3xl font-bold mb-4"
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1, ease: "easeInOut" }}
+        viewport={{ once: true }}
+      >
         Our Team
-      </h2>
-      <p className="mb-6" data-aos="fade-up" data-aos-delay="200">
+      </motion.h2>
+      <motion.p
+        className="mb-6"
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1, ease: "easeInOut", delay: 0.2 }}
+        viewport={{ once: true }}
+      >
         Meet some of the individuals who have helped us reach this milestone.
         Thank you.
-      </p>
+      </motion.p>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {teamMembers.map((member, index) => (
-          <div
+          <motion.div
             key={index}
-            className="bg-white rounded-lg shadow-md "
-            data-aos="fade-up"
-            data-aos-delay={400 + index * 200}
+            className="bg-white rounded-lg shadow-md"
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{
+              duration: 1,
+              ease: "easeInOut",
+              delay: 0.4 + index * 0.2,
+            }}
+            viewport={{ once: true }}
           >
             <img
               src={member.image}
@@ -54,9 +45,9 @@ const TeamComponent = () => {
             />
             <div className="mt-4 text-center p-2">
               <h3 className="text-xl font-bold">{member.name}</h3>
-              <p className="text-gray-500 text-sm ">{member.position}</p>
+              <p className="text-gray-500 text-sm">{member.position}</p>
             </div>
-          </div>
+          </motion.div>
         ))}
       </div>
     </div>
