@@ -1,6 +1,5 @@
-import React, { useEffect } from "react";
-import AOS from "aos";
-import "aos/dist/aos.css";
+import React from "react";
+import { motion } from "framer-motion";
 import signature from "/images/sig.png";
 import { Link } from "react-router-dom";
 import { IoGift } from "react-icons/io5";
@@ -9,6 +8,7 @@ import { IoMdFingerPrint } from "react-icons/io";
 import { FaHeart } from "react-icons/fa6";
 import { GiWorld } from "react-icons/gi";
 import { truncateText } from "../utils/utils";
+
 const items = [
   {
     icon: <IoMdFingerPrint />,
@@ -31,23 +31,24 @@ const items = [
 ];
 
 const AboutHome = ({ isTruncated }) => {
-  useEffect(() => {
-    AOS.init({
-      duration: 500,
-      offset: 100,
-      easing: "ease-in-out",
-      once: true, // Animate only once
-    });
-  }, []);
-
   return (
     <div className="flex flex-col md:flex-row gap-8 lg:gap-20 text-grey-450 text-opacity-90 lg:px-24 px-4 py-20">
       <div className="flex-1">
-        <p className="text-lg text-gray-500" data-aos="fade-up">
+        <motion.p
+          className="text-lg text-gray-500"
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+        >
           About us
-        </p>
-        <div data-aos="fade-up" data-aos-delay="200">
-          {" "}
+        </motion.p>
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+        >
           <h2 className="text-xl md:text-2xl font-bold mt-2">
             Our shipping solutions connect people with endless possibilities.
           </h2>
@@ -61,26 +62,23 @@ const AboutHome = ({ isTruncated }) => {
             services worldwide, meeting the diverse needs of our global
             clientele with precision and reliability.
           </p>
-        </div>
+        </motion.div>
 
-        <div className="flex flex-col gap-8 pt-12 ">
+        <div className="flex flex-col gap-8 pt-12">
           {items.map((item, index) => (
-            <div
+            <motion.div
               key={index}
               className="flex items-start gap-4 group"
-              data-aos="fade-up"
-              data-aos-delay={600 + index * 200}
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.4 + index * 0.2 }}
             >
-             
               <div className="w-fit flex justify-center items-center p-2 border-2 border-orange-450 bg-white rounded-full transition-all duration-500 ease-linear  group-hover:bg-orange-450">
-                  <span
-                    className="text-orange-450 transition-all duration-500 ease-linear group-hover:text-white text-4xl  flex justify-center items-center h-[1.5rem] w-[1.5rem]
-"
-                  >
-                 {item.icon}
-                  </span>
-                </div>
-
+                <span className="text-orange-450 transition-all duration-500 ease-linear group-hover:text-white text-4xl  flex justify-center items-center h-[1.5rem] w-[1.5rem]">
+                  {item.icon}
+                </span>
+              </div>
               <div>
                 <h1 className="pb-4 text-lg font-bold hover:text-orange-450">
                   {item.title}
@@ -91,7 +89,7 @@ const AboutHome = ({ isTruncated }) => {
                     : item.description}
                   {isTruncated && (
                     <Link
-                      to="/about" 
+                      to="/about"
                       className="text-orange-450 text-xs italic hover:underline"
                     >
                       Read More
@@ -99,12 +97,17 @@ const AboutHome = ({ isTruncated }) => {
                   )}
                 </p>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
       <div className="flex-1 pt-8 md:pt-40">
-        <div data-aos="fade-up" data-aos-delay="800">
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.6 }}
+        >
           <h2 className="text-xl md:text-2xl font-bold">
             BE THE BOSS OF YOUR SHIPMENT
           </h2>
@@ -117,18 +120,26 @@ const AboutHome = ({ isTruncated }) => {
             clicks, you can generate detailed shipping reports, ensuring
             seamless integration with your logistics operations.
           </p>
-        </div>
-        <img
+        </motion.div>
+
+        <motion.img
           src={signature}
           alt=""
           className="w-40 mt-8"
-          data-aos="fade-up"
-          data-aos-delay="600"
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.4 }}
         />
-        <h1 data-aos="fade-up" data-aos-delay="600">
+        <motion.h1
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+        >
           <span className="text-lg font-extrabold block">Michael Thompson</span>{" "}
           <span className="text-sm">Chief Executive Officer</span>
-        </h1>
+        </motion.h1>
       </div>
     </div>
   );
