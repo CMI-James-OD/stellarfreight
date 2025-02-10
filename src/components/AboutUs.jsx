@@ -2,33 +2,8 @@ import React from "react";
 import { motion } from "framer-motion";
 import signature from "/images/sig.png";
 import { Link } from "react-router-dom";
-import { IoGift } from "react-icons/io5";
-import { BsGiftFill } from "react-icons/bs";
-import { IoMdFingerPrint } from "react-icons/io";
-import { FaHeart } from "react-icons/fa6";
-import { GiWorld } from "react-icons/gi";
 import { truncateText } from "../utils/utils";
-
-const items = [
-  {
-    icon: <IoMdFingerPrint />,
-    title: "EXCELLENCE",
-    description:
-      "We meticulously assess our strategy every five years. Strategy 2029 serves as the blueprint for our operational framework at Trustway Logistics - Ensuring Excellence in a Digital Era. It outlines our approach to reshaping our industry through digitalization, aiming to foster connectivity and enhance lives. This reaffirms our position as a leading global logistics service provider. Strategy 2025 harnesses the power of digitalization to propel our vision forward.",
-  },
-  {
-    icon: <IoGift />,
-    title: "FIRST CHOICE",
-    description:
-      "Trustway Logistics has remarkable clients worldwide, and we're committed to maintaining their loyalty. That's why we prioritize exceptional service and our First Choice program, designed to continuously advance our team's capabilities daily. Our motto, 'Everybody. Everyday. Everywhere. A little bit better,' guides us in this endeavor.",
-  },
-  {
-    icon: <GiWorld />,
-    title: "A BIGGER WORLD",
-    description:
-      "Trustway Logistics contributes to a sustainable world through our logistics operations. Tackling this significant challenge, the Trustway Logistics Group has set an ambitious goal for climate protection: achieving zero-emissions logistics by 2064. How will we accomplish this?",
-  },
-];
+import { aboutus } from "../data/home";
 
 const AboutHome = ({ isTruncated }) => {
   return (
@@ -65,7 +40,7 @@ const AboutHome = ({ isTruncated }) => {
         </motion.div>
 
         <div className="flex flex-col gap-8 pt-12">
-          {items.map((item, index) => (
+          {aboutus.map((item, index) => (
             <motion.div
               key={index}
               className="flex items-start gap-4 group"
@@ -75,8 +50,8 @@ const AboutHome = ({ isTruncated }) => {
               transition={{ duration: 0.5, delay: 0.4 + index * 0.2 }}
             >
               <div className="w-fit flex justify-center items-center p-2 border-2 border-orange-450 bg-white rounded-full transition-all duration-500 ease-linear  group-hover:bg-orange-450">
-                <span className="text-orange-450 transition-all duration-500 ease-linear group-hover:text-white text-4xl  flex justify-center items-center h-[1.5rem] w-[1.5rem]">
-                  {item.icon}
+                <span className="text-orange-450 transition-all duration-500 ease-linear group-hover:text-white text-4xl flex justify-center items-center h-[1.5rem] w-[1.5rem]">
+                  {React.createElement(item.icon)}
                 </span>
               </div>
               <div>
