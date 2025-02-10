@@ -9,6 +9,9 @@ import dog from "/images/dog.jpg";
 import railway from "/images/railway.jpg";
 import warehousing from "/images/warehousing.jpg";
 import pas from "/images/pas.jpg";
+import { FaHouseChimney } from "react-icons/fa6";
+import { VscPackage } from "react-icons/vsc";
+import { MdDirectionsRailwayFilled } from "react-icons/md";
 
 export const aboutus = [
   {
@@ -119,5 +122,28 @@ export const services = [
       "At Trustway Logistics, we understand that not all shipments require the same service. That’s why we offer Door-to-Airport...",
     image: ship_,
     alt: "Door to Door",
+  },
+];
+export const moreServices = [
+  {
+    id: 1,
+    icon: FaHouseChimney,
+    title: "WAREHOUSING",
+    description:
+      "Sea Wave Logistics as a Warehousing Agent, provides high level professional warehousing services assuring the safe arrival of your shipment.",
+  },
+  {
+    id: 2,
+    icon: VscPackage,
+    title: "PACKAGING AND STORAGE",
+    description:
+      "Sea Wave Logistics has designed a customized packaging solutions specifically for the prevention of transit damages like breakages, scratches, abrasions etc.",
+  },
+  {
+    id: 3,
+    icon: MdDirectionsRailwayFilled,
+    title: "RAILWAY LOGISTICS",
+    description:
+      "Sea Wave Logistics Rail Freight services have been designed for those clients who require a safe and efficient way to move their cargo from places in mint condition.",
   },
 ];
