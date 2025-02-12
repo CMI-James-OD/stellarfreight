@@ -57,7 +57,7 @@ const UserPage = () => {
   return (
     <div className="relative">
       <Header />
-      <p className="lg:px-24 px-4 py-7 text-3xl bg-gray-100 flex font-sans">
+      <p className="lg:px-24 px-4 py-5 text-3xl bg-gray-100 flex font-sans">
         Track {cargo ? `: #${cargo.trackingCode}` : ""}
       </p>
       {/* <div className="absolute inset-0  brightness-75 -z-10"></div> */}
