@@ -5,3 +5,13 @@
 body {
   font-family: "Merriweather", serif;
 }
+.ReactModal__Overlay {
+  z-index: 1000 !important;
+  border-radius: 2px !important;
+  background-color: aquamarine;
+}
+@layer base {
+  :root {
+    --radius: 0.5rem;
+  }
+}

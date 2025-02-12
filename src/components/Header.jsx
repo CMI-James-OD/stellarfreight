@@ -23,7 +23,7 @@ const Header = () => {
     { name: "Parcel", path: "/parcel" },
   ];
   return (
-    <div className="sticky top-0 z-[1000] w-full bg-white  lg:px-12 px-4 py-2 flex justify-between items-center shadow-md text-grey-450">
+    <div className="sticky top-0 z-10 w-full bg-white  lg:px-12 px-4 py-2 flex justify-between items-center shadow-md text-grey-450">
       {/* Logo Section */}
       <Link to="/">
         <div className="flex items-center">

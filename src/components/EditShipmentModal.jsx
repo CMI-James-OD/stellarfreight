@@ -11,7 +11,15 @@ import { addDoc, updateDoc, doc } from "firebase/firestore";
 import { toast } from "react-toastify";
 import cancel from "/images/cancel.svg";
 import ShipmentStatusTracker from "../ShipmentStatusTracker";
-
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 Modal.setAppElement("#root");
 
 const EditShipmentModal = ({ isOpen, onRequestClose, shipment, editMode }) => {
@@ -116,219 +124,199 @@ const EditShipmentModal = ({ isOpen, onRequestClose, shipment, editMode }) => {
   };
 
   return (
-    <Modal
-      isOpen={isOpen}
-      onRequestClose={onRequestClose}
-      style={{
-        overlay: { backgroundColor: "rgba(0, 0, 0, 0.5)" },
-        content: {
-          top: "50%",
-          left: "50%",
-          right: "auto",
-          bottom: "auto",
-          marginRight: "-50%",
-          transform: "translate(-50%, -50%)",
-          padding: "0",
-          width: "90%",
-          maxWidth: "40rem",
-          height: "auto",
-          maxHeight: "80%",
-          borderRadius: "20px",
-          overflowY: "auto",
-        },
-      }}
-    >
-      <div className="w-full justify-center items-center p-[1rem] bg-zinc-100 rounded-sm relative">
-        <button
-          className="absolute w-[1.5rem] top-1 right-1"
-          type="button"
-          onClick={onRequestClose}
-        >
-          <img src={cancel} alt="" className="w-[2rem] animate-pulse" />
-        </button>
-        <h2 className="text-[1.5rem] text-center">
-          {editMode ? "Edit Shipment" : "New Shipment"}
-        </h2>
-        <form
-          onSubmit={handleSaveShipment}
-          className="flex flex-col items-center"
-        >
-          <div className="flex w-full justify-between">
-            <div className="flex flex-col gap-1">
-              <h3 className="text-center">Sender Details</h3>
-              <label className="flex flex-col">
-                Name:
+    <Dialog open={isOpen} onOpenChange={onRequestClose}>
+      {" "}
+      <DialogContent className="sm:max-w-[600px]">
+        <div className="w-full justify-center items-center p-[1rem] bg-zinc-100  relative">
+          {/* <button
+            className="absolute w-[1.5rem] top-1 right-1"
+            type="button"
+            onClick={onRequestClose}
+          >
+            <img src={cancel} alt="" className="w-[2rem] animate-pulse" />
+          </button> */}
+          <DialogTitle>{editMode ? "Edit Shipment" : "New Shipment"}</DialogTitle>
+          <form
+            onSubmit={handleSaveShipment}
+            className="flex flex-col items-center"
+          >
+            <div className="flex w-full justify-between">
+              <div className="flex flex-col gap-1">
+                <h3 className="text-center">Sendesdvbfdr Details</h3>
+                <label className="flex flex-col">
+                  Name:
+                  <input
+                    type="text"
+                    value={sender.name}
+                    onChange={(e) =>
+                      handleInputChange({ name: e.target.value }, "sender")
+                    }
+                    required
+                  />
+                </label>
+                <label className="flex flex-col">
+                  Phone:
+                  <input
+                    type="text"
+                    value={sender.phone}
+                    onChange={(e) =>
+                      handleInputChange({ phone: e.target.value }, "sender")
+                    }
+                    required
+                  />
+                </label>
+                <label className="flex flex-col">
+                  Email:
+                  <input
+                    type="email"
+                    value={sender.email}
+                    onChange={(e) =>
+                      handleInputChange({ email: e.target.value }, "sender")
+                    }
+                    required
+                  />
+                </label>
+              </div>
+              <div className="flex flex-col gap-1">
+                <h3 className="text-center">Receiver Details</h3>
+                <label className="flex flex-col">
+                  Name:
+                  <input
+                    type="text"
+                    value={receiver.name}
+                    onChange={(e) =>
+                      handleInputChange({ name: e.target.value }, "receiver")
+                    }
+                    required
+                  />
+                </label>
+                <label className="flex flex-col">
+                  Phone:
+                  <input
+                    type="text"
+                    value={receiver.phone}
+                    onChange={(e) =>
+                      handleInputChange({ phone: e.target.value }, "receiver")
+                    }
+                    required
+                  />
+                </label>
+                <label className="flex flex-col">
+                  Email:
+                  <input
+                    type="email"
+                    value={receiver.email}
+                    onChange={(e) =>
+                      handleInputChange({ email: e.target.value }, "receiver")
+                    }
+                    required
+                  />
+                </label>
+              </div>
+            </div>
+            <div className="flex flex-col w-full gap-2 mt-2">
+              <h3 className="text-center">Shipment Details</h3>
+              <label className="flex justify-between gap-2">
+                Content Name:
                 <input
                   type="text"
-                  value={sender.name}
+                  name="contentName"
+                  value={shipmentDetails.contentName}
                   onChange={(e) =>
-                    handleInputChange({ name: e.target.value }, "sender")
+                    handleInputChange(
+                      { contentName: e.target.value },
+                      "shipmentDetails"
+                    )
                   }
                   required
                 />
               </label>
-              <label className="flex flex-col">
-                Phone:
-                <input
-                  type="text"
-                  value={sender.phone}
-                  onChange={(e) =>
-                    handleInputChange({ phone: e.target.value }, "sender")
+              <label className="flex justify-between gap-2">
+                Country From:
+                <Select
+                  options={countryOptions}
+                  value={shipmentDetails.countryFrom}
+                  onChange={(value) =>
+                    handleInputChange({ countryFrom: value }, "shipmentDetails")
                   }
                   required
                 />
               </label>
-              <label className="flex flex-col">
-                Email:
-                <input
-                  type="email"
-                  value={sender.email}
-                  onChange={(e) =>
-                    handleInputChange({ email: e.target.value }, "sender")
+              <label className="flex justify-between gap-2">
+                Country To:
+                <Select
+                  options={countryOptions}
+                  value={shipmentDetails.countryTo}
+                  onChange={(value) =>
+                    handleInputChange({ countryTo: value }, "shipmentDetails")
                   }
                   required
                 />
+              </label>
+              <label className="flex justify-between gap-2">
+                Shipping Date:
+                <DatePicker
+                  selected={shipmentDetails.shippingDate}
+                  onChange={(date) => handleDateChange(date, "shippingDate")}
+                  required
+                />
+              </label>
+              <label className="flex justify-between gap-2">
+                Arrival Date:
+                <DatePicker
+                  selected={shipmentDetails.arrivalDate}
+                  onChange={(date) => handleDateChange(date, "arrivalDate")}
+                  required
+                />
+              </label>
+              <label className="flex justify-between gap-2">
+                Custom Clearance Fee:
+                <input
+                  type="text"
+                  name="customClearanceFee"
+                  value={shipmentDetails.customClearanceFee}
+                  onChange={(e) =>
+                    handleInputChange(
+                      { customClearanceFee: e.target.value },
+                      "shipmentDetails"
+                    )
+                  }
+                  required
+                />
+              </label>
+              <label className="flex justify-between gap-2">
+                Status:
+                <select
+                  name="status"
+                  value={shipmentDetails.status}
+                  onChange={(e) =>
+                    handleInputChange(
+                      { status: e.target.value },
+                      "shipmentDetails"
+                    )
+                  }
+                  required
+                >
+                  <option value="processed">Processed</option>
+                  <option value="shipped">Shipped</option>
+                  <option value="in transit">In Transit</option>
+                  <option value="arrived">Arrived</option>
+                  <option value="delivered">Delivered</option>
+                </select>
               </label>
             </div>
-            <div className="flex flex-col gap-1">
-              <h3 className="text-center">Receiver Details</h3>
-              <label className="flex flex-col">
-                Name:
-                <input
-                  type="text"
-                  value={receiver.name}
-                  onChange={(e) =>
-                    handleInputChange({ name: e.target.value }, "receiver")
-                  }
-                  required
-                />
-              </label>
-              <label className="flex flex-col">
-                Phone:
-                <input
-                  type="text"
-                  value={receiver.phone}
-                  onChange={(e) =>
-                    handleInputChange({ phone: e.target.value }, "receiver")
-                  }
-                  required
-                />
-              </label>
-              <label className="flex flex-col">
-                Email:
-                <input
-                  type="email"
-                  value={receiver.email}
-                  onChange={(e) =>
-                    handleInputChange({ email: e.target.value }, "receiver")
-                  }
-                  required
-                />
-              </label>
-            </div>
-          </div>
-          <div className="flex flex-col w-full gap-2 mt-2">
-            <h3 className="text-center">Shipment Details</h3>
-            <label className="flex justify-between gap-2">
-              Content Name:
-              <input
-                type="text"
-                name="contentName"
-                value={shipmentDetails.contentName}
-                onChange={(e) =>
-                  handleInputChange(
-                    { contentName: e.target.value },
-                    "shipmentDetails"
-                  )
-                }
-                required
-              />
-            </label>
-            <label className="flex justify-between gap-2">
-              Country From:
-              <Select
-                options={countryOptions}
-                value={shipmentDetails.countryFrom}
-                onChange={(value) =>
-                  handleInputChange(
-                    { countryFrom: value },
-                    "shipmentDetails"
-                  )
-                }
-                required
-              />
-            </label>
-            <label className="flex justify-between gap-2">
-              Country To:
-              <Select
-                options={countryOptions}
-                value={shipmentDetails.countryTo}
-                onChange={(value) =>
-                  handleInputChange({ countryTo: value }, "shipmentDetails")
-                }
-                required
-              />
-            </label>
-            <label className="flex justify-between gap-2">
-              Shipping Date:
-              <DatePicker
-                selected={shipmentDetails.shippingDate}
-                onChange={(date) => handleDateChange(date, "shippingDate")}
-                required
-              />
-            </label>
-            <label className="flex justify-between gap-2">
-              Arrival Date:
-              <DatePicker
-                selected={shipmentDetails.arrivalDate}
-                onChange={(date) => handleDateChange(date, "arrivalDate")}
-                required
-              />
-            </label>
-            <label className="flex justify-between gap-2">
-              Custom Clearance Fee:
-              <input
-                type="text"
-                name="customClearanceFee"
-                value={shipmentDetails.customClearanceFee}
-                onChange={(e) =>
-                  handleInputChange(
-                    { customClearanceFee: e.target.value },
-                    "shipmentDetails"
-                  )
-                }
-                required
-              />
-            </label>
-            <label className="flex justify-between gap-2">
-              Status:
-              <select
-                name="status"
-                value={shipmentDetails.status}
-                onChange={(e) =>
-                  handleInputChange({ status: e.target.value }, "shipmentDetails")
-                }
-                required
+            <div className="flex justify-center w-full mt-2">
+              <button
+                type="submit"
+                className="bg-blue-500 text-white py-2 px-4 rounded"
               >
-                <option value="processed">Processed</option>
-                <option value="shipped">Shipped</option>
-                <option value="in transit">In Transit</option>
-                <option value="arrived">Arrived</option>
-                <option value="delivered">Delivered</option>
-              </select>
-            </label>
-          </div>
-          <div className="flex justify-center w-full mt-2">
-            <button
-              type="submit"
-              className="bg-blue-500 text-white py-2 px-4 rounded"
-            >
-              {editMode ? "Update Shipment" : "Add Shipment"}
-            </button>
-          </div>
-        </form>
-      </div>
-    </Modal>
+                {editMode ? "Update Shipment" : "Add Shipment"}
+              </button>
+            </div>
+          </form>
+        </div>
+      </DialogContent>
+    </Dialog>
   );
 };
 
