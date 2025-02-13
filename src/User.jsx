@@ -117,7 +117,7 @@ const UserPage = () => {
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
               transition={transitionSettings}
-              className="w-full mx-auto p-6 space-y-8 border my-4 bg-white rounded-md shadow-lg"
+              className="max-w-[70vw] mx-auto p-6 space-y-8 border my-4 bg-white rounded-md shadow-lg"
             >
               {/* Header */}
               <div className="flex items-center gap-2">
