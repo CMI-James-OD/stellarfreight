@@ -147,13 +147,13 @@ const UserPage = () => {
               {/* Header */}
               <div className="flex items-center gap-2">
                 <span className="text-orange-500">SHIPMENT</span>
-                <span className="font-medium">#{cargo.trackingCode}</span>
+                <span className="font-medium">#{cargo.shipmentId}</span>
               </div>
 
               {/* Status */}
               <div className="text-center space-y-4">
                 <h1 className="text-4xl animate-pulse font-medium uppercase">
-                {getStatusLabel(cargo.status)}
+                  {getStatusLabel(cargo.status)}
                 </h1>
 
                 <p className="text-gray-600 italic">
@@ -175,20 +175,41 @@ const UserPage = () => {
                   <div className="relative">
                     <div className="h-0.5 bg-gray-300 absolute w-full top-6" />
                     <div className="relative flex justify-between items-center">
-                      <span className="text-sm">{cargo.countryFrom.label}</span>
+                      <span className="text-sm flex-1 overflow-hidden text-ellipsis whitespace-nowrap text-left mt-1">
+                        {cargo.countryFrom.label
+                          .split(" ")
+                          .map((word, index) => (
+                            <span key={index} className="block">
+                              {word}
+                            </span>
+                          ))}
+                      </span>
+
                       <div className="bg-yellow-100 p-3 rounded-lg text-center">
-                        <span className="text-xs">Location</span>
+                        <span className="text-[10px]">Location</span>
                         <br />
-                        <span className="text-xs">
-                          {cargo.countryCurrent.label}
+                        <span className="text-xs ">
+                          {cargo.countryCurrent.label
+                            .split(" ")
+                            .map((word, index) => (
+                              <span key={index} className="block">
+                                {word}
+                              </span>
+                            ))}
                         </span>
                         <div className="w-3 h-3 bg-yellow-400 rounded-full mx-auto mt-1 animate-pulse" />
                       </div>
-                      <span className="text-sm">{cargo.countryTo.label}</span>
+                      <span className="text-sm flex-1 overflow-hidden text-ellipsis whitespace-nowrap text-right mt-1">
+                        {cargo.countryTo.label.split(" ").map((word, index) => (
+                          <span key={index} className="block">
+                            {word}
+                          </span>
+                        ))}
+                      </span>
                     </div>
                     <div className="mt-2 text-center">
                       <span className="bg-yellow-400 text-xs px-2 py-1 rounded">
-                      {getStatusLabel(cargo.status)}
+                        {getStatusLabel(cargo.status)}
                       </span>
                     </div>
                   </div>
@@ -306,7 +327,7 @@ const UserPage = () => {
                 </div>
                 <div>
                   <h3 className="font-bold mb-1">WEIGHT</h3>
-                  <p className="text-sm">28kgKG</p>
+                  <p className="text-sm">{cargo.weight || "-"}</p>
                 </div>
                 <div>
                   <h3 className="font-bold mb-1">SHIP DATE</h3>

@@ -137,8 +137,8 @@ const AdminDashboard = () => {
     return prefix + randomNumber.toString().substring(0, 9);
   };
   const generateShipmentId = () => {
-    return Math.floor(1000000000 + Math.random() * 9000000000).toString()
-  }
+    return Math.floor(1000000000 + Math.random() * 9000000000).toString();
+  };
 
   const handleSaveShipment = async (e) => {
     setLoading(true);
@@ -156,7 +156,7 @@ const AdminDashboard = () => {
         setLoading(false);
       } else {
         const trackingCode = generateTrackingCode();
-        const shipmentId = generateShipmentId()
+        const shipmentId = generateShipmentId();
         const shipmentData = {
           sender,
           receiver,
@@ -417,7 +417,9 @@ const AdminDashboard = () => {
                       <div className="flex flex-col gap-2">
                         <h3 className="text-center">Sender Details</h3>
                         <label className="flex  gap-2">
-                          Name:
+                          <span className="flex">
+                            Name: <span className="text-red-500">*</span>
+                          </span>
                           <input
                             className="px-1 w-full border-2 rounded-md"
                             type="text"
@@ -432,7 +434,9 @@ const AdminDashboard = () => {
                           />
                         </label>
                         <label className="flex gap-2">
-                          Phone:
+                          <span className="flex">
+                            Phone:<span className="text-red-500">*</span>
+                          </span>
                           <input
                             className="px-1 w-full border-2 rounded-md"
                             type="text"
@@ -447,7 +451,9 @@ const AdminDashboard = () => {
                           />
                         </label>
                         <label className="flex gap-2">
-                          Email:
+                          <span className="flex">
+                            Email:<span className="text-red-500">*</span>
+                          </span>
                           <input
                             className="px-1 w-full border-2 rounded-md"
                             type="email"
@@ -465,7 +471,9 @@ const AdminDashboard = () => {
                       <div className="flex flex-col gap-2  ">
                         <h3 className="text-center">Receiver Details</h3>
                         <label className="flex gap-2">
-                          Name:
+                          <span className="flex">
+                            Name: <span className="text-red-500">*</span>
+                          </span>
                           <input
                             className="px-1 w-full border-2 rounded-md"
                             type="text"
@@ -480,7 +488,9 @@ const AdminDashboard = () => {
                           />
                         </label>
                         <label className="flex gap-2">
-                          Phone:
+                          <span className="flex">
+                            Phone: <span className="text-red-500">*</span>
+                          </span>
                           <input
                             className="px-1 w-full border-2 rounded-md"
                             type="text"
@@ -495,7 +505,9 @@ const AdminDashboard = () => {
                           />
                         </label>
                         <label className="flex gap-2">
-                          Email:
+                          <span className="flex">
+                            Email:<span className="text-red-500">*</span>
+                          </span>
                           <input
                             className="px-1 w-full border-2 rounded-md"
                             type="email"
@@ -515,7 +527,9 @@ const AdminDashboard = () => {
                       <h3 className="text-center">Shipment Details</h3>
 
                       <label className="flex justify-between items-center gap-2">
-                        Origin:
+                        <span className="flex">
+                          Origin: <span className="text-red-500">*</span>
+                        </span>
                         <Select
                           className="w-[65%]  md:w-[75%]"
                           options={countryOptions}
@@ -544,11 +558,12 @@ const AdminDashboard = () => {
                               "shipmentDetails"
                             )
                           }
-                          required
                         />
                       </label>
                       <label className="flex justify-between items-center gap-2">
-                        Destination:
+                        <span className="flex">
+                          Destination:<span className="text-red-500">*</span>
+                        </span>
                         <Select
                           className=" w-[65%]  md:w-[75%]"
                           options={countryOptions}
@@ -563,7 +578,9 @@ const AdminDashboard = () => {
                         />
                       </label>
                       <label className="flex w-full items-center justify-between gap-2">
-                        Shipping Date:
+                        <span className="flex">
+                          Shipping Date:<span className="text-red-500">*</span>
+                        </span>
                         <DatePicker
                           className=" border-2 rounded-md"
                           selected={shipmentDetails.shippingDate}
@@ -574,7 +591,9 @@ const AdminDashboard = () => {
                         />
                       </label>
                       <label className="flex w-full items-center justify-between gap-2">
-                        Arrival Date:
+                        <span className="flex">
+                          Arrival Date:<span className="text-red-500">*</span>
+                        </span>
                         <DatePicker
                           className="border-2 rounded-md "
                           selected={shipmentDetails.arrivalDate}
@@ -585,7 +604,9 @@ const AdminDashboard = () => {
                         />
                       </label>
                       <label className="flex  justify-between">
-                        Content:
+                        <span className="flex">
+                          Content:<span className="text-red-500">*</span>
+                        </span>
                         <input
                           className=" w-[65%] md:w-[75%] border-2 rounded-md"
                           type="text"
@@ -601,7 +622,9 @@ const AdminDashboard = () => {
                         />
                       </label>
                       <label className="flex justify-between ">
-                        Custom Fee:
+                        <span className="flex">
+                          Custom Fee:<span className="text-red-500">*</span>
+                        </span>
                         <input
                           className="w-[65%]  md:w-[75%] border-2 rounded-md"
                           type="text"
@@ -617,7 +640,10 @@ const AdminDashboard = () => {
                         />
                       </label>
                       <label className="flex justify-between">
-                        Weight (kg):
+                        <span className="flex">
+                          {" "}
+                          Weight (kg):<span className="text-red-500">*</span>
+                        </span>
                         <input
                           className="w-[65%] md:w-[75%] border-2 rounded-md"
                           type="number"
@@ -629,11 +655,12 @@ const AdminDashboard = () => {
                               "shipmentDetails"
                             )
                           }
-                          required
                         />
                       </label>
                       <div className="flex flex-col gap-2 mt-2">
-                        <h4>Status</h4>
+                        <span className="flex">
+                          Status:<span className="text-red-500">*</span>
+                        </span>
                         <ShipmentStatusTracker
                           status={shipmentDetails.status}
                           onChange={(status) =>
