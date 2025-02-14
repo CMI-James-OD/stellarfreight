@@ -62,7 +62,8 @@ const UserPage = () => {
       </p>
       {/* <div className="absolute inset-0  brightness-75 -z-10"></div> */}
       <div className="min-h-screen  flex flex-col items-center bg-gray-200  pb-6 px-4 md:px-0">
-      <div className="absolute inset-0  brightness-75 -z-10"></div> {!cargo && (
+        <div className="absolute inset-0  brightness-75 -z-10"></div>{" "}
+        {!cargo && (
           <motion.form
             onSubmit={handleSubmit}
             className="w-full max-w-md bg-white p-4 rounded-lg shadow-lg pt-24"
@@ -117,7 +118,7 @@ const UserPage = () => {
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
               transition={transitionSettings}
-              className="max-w-[70vw] mx-auto p-6 space-y-8 border my-4 bg-white rounded-md shadow-lg"
+              className="w-[95vw] lg:w-[85vw] xl:w-[70vw] mx-auto p-6 space-y-8 border my-4 bg-white rounded-md shadow-lg"
             >
               {/* Header */}
               <div className="flex items-center gap-2">
