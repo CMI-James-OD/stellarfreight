@@ -81,16 +81,14 @@ const UserPage = () => {
   return (
     <div className="relative">
       <Header />
-      <p className="lg:px-24 px-8  py-5 text-2xl xl:text-3xl bg-gray-100 flex font-sans">
-        Track {cargo ? `: #${cargo.trackingCode}` : ""}
-      </p>
+
       {/* <div className="absolute inset-0  brightness-75 -z-10"></div> */}
       <div className="min-h-screen  flex flex-col items-center bg-gray-200  pb-6 px-4 md:px-0">
         <div className="absolute inset-0  brightness-75 -z-10"></div>{" "}
         {!cargo && (
           <motion.form
             onSubmit={handleSubmit}
-            className="w-full max-w-md bg-white p-4 rounded-lg shadow-lg pt-24"
+            className="w-full max-w-md bg-white p-4 rounded-lg shadow-lg mt-6 pt-24"
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={transitionSettings}
@@ -147,7 +145,7 @@ const UserPage = () => {
               {/* Header */}
               <div className="flex items-center gap-2">
                 <span className="text-orange-500">SHIPMENT</span>
-                <span className="font-medium">#{cargo.shipmentId}</span>
+                <span className="font-medium">#{cargo.trackingCode}</span>
               </div>
 
               {/* Status */}
@@ -311,7 +309,7 @@ const UserPage = () => {
                 </div>
                 <div>
                   <h3 className="font-bold mb-1">SHIPMENT ID</h3>
-                  <p className="text-sm">SWL42024500</p>
+                  <p className="text-sm">{cargo.shipmentId || "-"}</p>
                 </div>
                 <div>
                   <h3 className="font-bold mb-1">SENDER</h3>
