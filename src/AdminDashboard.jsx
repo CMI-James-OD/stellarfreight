@@ -291,7 +291,7 @@ const AdminDashboard = () => {
         <div>
           <Header />
 
-          <div className="absolute inset-0 bg-orange-450 brightness-75 -z-10"></div>
+          <div className="absolute inset-0 bg-gray-100/30 brightness-75 -z-10"></div>
           <div className="min-h-screen w-full flex flex-col items-center relative">
             <div className="flex px-[0.5rem]  py-[2rem]    flex-col  lg:w-[40%] md:w-[60%] w-full">
               <motion.div
