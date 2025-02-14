@@ -38,7 +38,9 @@ const UserPage = () => {
       );
       const querySnapshot = await getDocs(q);
       if (!querySnapshot.empty) {
-        setCargo(querySnapshot.docs[0].data());
+        const cargoData = querySnapshot.docs[0].data();
+        setCargo(cargoData);
+        console.log(cargoData);
       } else {
         toast.error("Code not found");
         setCargo(null);
@@ -53,11 +55,33 @@ const UserPage = () => {
     e.preventDefault();
     handleSearch(inputCode);
   };
+  const statusStages = ["Processed", "Shipped", "En Route", "Arrived"];
+  const getStatusMessage = (status) => {
+    if (statusStages.indexOf(status) >= statusStages.indexOf("Arrived")) {
+      return "Parcel arrived at Destination";
+    }
+    if (statusStages.indexOf(status) >= statusStages.indexOf("En Route")) {
+      return "Parcel Stops For Customs Clearance";
+    }
+    if (statusStages.indexOf(status) >= statusStages.indexOf("Processed")) {
+      return "Parcel Shipped Successfully";
+    }
+    return "Pending Shipment"; // Default message if status is not matched
+  };
+  const getStatusLabel = (status) => {
+    const statusMap = {
+      Processed: "In Progress",
+      Shipped: "Dispatched",
+      "En Route": "On Hold",
+      Arrived: "Delivered",
+    };
+    return statusMap[status] || "Unknown"; // Fallback in case of an unexpected status
+  };
 
   return (
     <div className="relative">
       <Header />
-      <p className="lg:px-24 px-4 py-5 text-3xl bg-gray-100 flex font-sans">
+      <p className="lg:px-24 px-8  py-5 text-2xl xl:text-3xl bg-gray-100 flex font-sans">
         Track {cargo ? `: #${cargo.trackingCode}` : ""}
       </p>
       {/* <div className="absolute inset-0  brightness-75 -z-10"></div> */}
@@ -128,7 +152,10 @@ const UserPage = () => {
 
               {/* Status */}
               <div className="text-center space-y-4">
-                <h1 className="text-4xl animate-pulse font-medium">ON HOLD</h1>
+                <h1 className="text-4xl animate-pulse font-medium uppercase">
+                {getStatusLabel(cargo.status)}
+                </h1>
+
                 <p className="text-gray-600 italic">
                   Please check your parcel travel history for more details
                 </p>
@@ -152,14 +179,16 @@ const UserPage = () => {
                       <div className="bg-yellow-100 p-3 rounded-lg text-center">
                         <span className="text-xs">Location</span>
                         <br />
-                        <span className="text-xs">Turkey</span>
+                        <span className="text-xs">
+                          {cargo.countryCurrent.label}
+                        </span>
                         <div className="w-3 h-3 bg-yellow-400 rounded-full mx-auto mt-1 animate-pulse" />
                       </div>
                       <span className="text-sm">{cargo.countryTo.label}</span>
                     </div>
                     <div className="mt-2 text-center">
                       <span className="bg-yellow-400 text-xs px-2 py-1 rounded">
-                        On Hold
+                      {getStatusLabel(cargo.status)}
                       </span>
                     </div>
                   </div>
@@ -171,21 +200,23 @@ const UserPage = () => {
                 <h3 className="text-xs text-gray-600 mb-3">
                   Last Travel History
                 </h3>
-                <p className="text-gray-800">Parcel Stops For Customs Check</p>
+                <p className="text-gray-800">
+                  {getStatusMessage(cargo.status)}
+                </p>
               </div>
 
               {/* Contact Information */}
               <div className="grid md:grid-cols-2 gap-8">
                 <div>
                   <h3 className="font-bold mb-4">Sender's Information</h3>
-                  <div className="space-y-2">
+                  <div className="">
                     <div className="grid grid-cols-3 bg-gray-50 p-2">
                       <span className="text-xs font-bold">Name</span>
                       <span className="text-xs col-span-2">
                         {cargo.sender.name}
                       </span>
                     </div>
-                    <div className="grid grid-cols-3 bg-gray-50 p-2">
+                    <div className="grid grid-cols-3  p-2">
                       <span className="text-xs font-bold">Phone</span>
                       <span className="text-xs col-span-2">
                         {cargo.sender.phone}
@@ -197,7 +228,7 @@ const UserPage = () => {
                         {cargo.sender.email}
                       </span>
                     </div>
-                    <div className="grid grid-cols-3 bg-gray-50 p-2">
+                    <div className="grid grid-cols-3  p-2">
                       <span className="text-xs font-bold">From</span>
                       <span className="text-xs col-span-2">
                         {cargo.countryFrom.label}
@@ -208,14 +239,14 @@ const UserPage = () => {
 
                 <div>
                   <h3 className="font-bold mb-4">Receiver's Information</h3>
-                  <div className="space-y-2">
+                  <div>
                     <div className="grid grid-cols-3 bg-gray-50 p-2">
                       <span className="text-xs font-bold">Name</span>
                       <span className="text-xs col-span-2">
                         {cargo.receiver.name}
                       </span>
                     </div>
-                    <div className="grid grid-cols-3 bg-gray-50 p-2">
+                    <div className="grid grid-cols-3  p-2">
                       <span className="text-xs font-bold">Phone</span>
                       <span className="text-xs col-span-2">
                         {cargo.receiver.phone}
@@ -227,7 +258,7 @@ const UserPage = () => {
                         {cargo.receiver.email}
                       </span>
                     </div>
-                    <div className="grid grid-cols-3 bg-gray-50 p-2">
+                    <div className="grid grid-cols-3 p-2">
                       <span className="text-xs font-bold">To</span>
                       <span className="text-xs col-span-2">
                         {cargo.countryTo.label}
@@ -297,33 +328,56 @@ const UserPage = () => {
                 <table className="w-full">
                   <thead>
                     <tr className="text-left">
-                      <th className="p-2 text-sm">SN</th>
-                      <th className="p-2 text-sm">Time</th>
-                      <th className="p-2 text-sm">Location</th>
-                      <th className="p-2 text-sm">Status</th>
+                      <th className="p-2 text-xs">SN</th>
+                      <th className="p-2 text-xs">Time</th>
+                      <th className="p-2 text-xs">Location</th>
+                      <th className="p-2 text-xs">Status</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr className="bg-gray-50">
-                      <td className="p-2 text-sm">1.</td>
-                      <td className="p-2 text-sm">
-                        {formatTimestamp(cargo.shippingDate)}
-                      </td>
-                      <td className="p-2 text-sm">{cargo.countryFrom.label}</td>
-                      <td className="p-2 text-sm">
-                        Parcel Shipped Successfully
-                      </td>
-                    </tr>
-                    <tr className="bg-gray-50">
-                      <td className="p-2 text-sm">2.</td>
-                      <td className="p-2 text-sm">
-                        {formatTimestamp(cargo.arrivalDate)}
-                      </td>
-                      <td className="p-2 text-sm">{cargo.countryTo.label}</td>
-                      <td className="p-2 text-sm">
-                        Parcel arrived at Destination
-                      </td>
-                    </tr>
+                    {statusStages.indexOf(cargo.status) >=
+                      statusStages.indexOf("Processed") && (
+                      <tr className="bg-gray-50">
+                        <td className="p-2 text-xs">1.</td>
+                        <td className="p-2 text-xs">
+                          {formatTimestamp(cargo.shippingDate)}
+                        </td>
+                        <td className="p-2 text-xs">
+                          {cargo.countryFrom.label}
+                        </td>
+                        <td className="p-2 text-xs">
+                          Parcel Shipped Successfully
+                        </td>
+                      </tr>
+                    )}
+                    {statusStages.indexOf(cargo.status) >=
+                      statusStages.indexOf("En Route") && (
+                      <tr className="bg-white">
+                        <td className="p-2 text-xs">2.</td>
+                        <td className="p-2 text-xs">
+                          {formatTimestamp(cargo.countryCurrentTime)}
+                        </td>
+                        <td className="p-2 text-xs">
+                          {cargo.countryCurrent.label}
+                        </td>
+                        <td className="p-2 text-xs">
+                          Parcel Stops For Customs Clearance
+                        </td>
+                      </tr>
+                    )}
+                    {statusStages.indexOf(cargo.status) >=
+                      statusStages.indexOf("Arrived") && (
+                      <tr className="bg-gray-50">
+                        <td className="p-2 text-xs">2.</td>
+                        <td className="p-2 text-xs">
+                          {formatTimestamp(cargo.arrivalDate)}
+                        </td>
+                        <td className="p-2 text-xs">{cargo.countryTo.label}</td>
+                        <td className="p-2 text-xs">
+                          Parcel arrived at Destination
+                        </td>
+                      </tr>
+                    )}
                   </tbody>
                 </table>
               </div>

@@ -18,7 +18,11 @@ import Select from "react-select";
 import countryList from "react-select-country-list";
 import ShipmentStatusTracker from "./ShipmentStatusTracker";
 import { FaEdit } from "react-icons/fa";
-import { MdDelete, MdOutlineContentCopy, MdOutlineCreateNewFolder } from "react-icons/md";
+import {
+  MdDelete,
+  MdOutlineContentCopy,
+  MdOutlineCreateNewFolder,
+} from "react-icons/md";
 import DeleteModal from "./components/DeleteModal";
 import { Rings, TailSpin, Triangle } from "react-loader-spinner";
 import Header from "./components/Header";
@@ -64,8 +68,12 @@ const AdminDashboard = () => {
     contentName: "",
     countryFrom: null,
     countryTo: null,
+    countryCurrent: null,
+    countryCurrentTime: null,
     customClearanceFee: "",
     status: "processed",
+    weight: "",
+    shipmentId: "",
   });
 
   const [trackingCode, setTrackingCode] = useState("");
@@ -85,7 +93,7 @@ const AdminDashboard = () => {
   };
   useEffect(() => {
     fetchShipments();
-  }, []);
+  }, [db]);
 
   const toggleModal = () => {
     setShowModal(!showModal);
@@ -128,6 +136,9 @@ const AdminDashboard = () => {
     const randomNumber = Math.floor(1000000000 + Math.random() * 9000000000);
     return prefix + randomNumber.toString().substring(0, 9);
   };
+  const generateShipmentId = () => {
+    return Math.floor(1000000000 + Math.random() * 9000000000).toString()
+  }
 
   const handleSaveShipment = async (e) => {
     setLoading(true);
@@ -135,17 +146,25 @@ const AdminDashboard = () => {
     try {
       if (editMode) {
         const shipmentRef = doc(db, "shipments", currentShipmentId);
-        await updateDoc(shipmentRef, { sender, receiver, ...shipmentDetails });
+        await updateDoc(shipmentRef, {
+          sender,
+          receiver,
+          ...shipmentDetails,
+          countryCurrentTime: new Date(),
+        });
         toast.success("Shipment updated successfully");
         setLoading(false);
       } else {
         const trackingCode = generateTrackingCode();
+        const shipmentId = generateShipmentId()
         const shipmentData = {
           sender,
           receiver,
           ...shipmentDetails,
           trackingCode,
-          createdAt: new Date(), // Ensure createdAt is set when adding a new shipment
+          shipmentId,
+          createdAt: new Date(),
+          countryCurrentTime: new Date(),
         };
         await addDoc(collection(db, "shipments"), shipmentData);
         toast.success("Shipment added successfully");
@@ -171,13 +190,20 @@ const AdminDashboard = () => {
       contentName: shipment.contentName,
       countryFrom: shipment.countryFrom,
       countryTo: shipment.countryTo,
+      countryCurrent: shipment.countryCurrent,
+      countryCurrentTime: shipment.countryCurrentTime
+        ? new Date(shipment.countryCurrentTime.seconds * 1000)
+        : null,
       customClearanceFee: shipment.customClearanceFee,
       status: shipment.status,
+      weight: shipment.weight || "",
+      shipmentId: shipment.shipmentId || "",
     });
+
     setEditMode(true);
     setShowModal(true);
   };
-
+  console.log(shipmentDetails);
   const resetForm = () => {
     setSender({ name: "", phone: "", email: "" });
     setReceiver({ name: "", phone: "", email: "" });
@@ -187,8 +213,12 @@ const AdminDashboard = () => {
       contentName: "",
       countryFrom: "",
       countryTo: "",
+      countryCurrent: "",
+      countryCurrentTime: null,
       customClearanceFee: "",
       status: "processed",
+      weight: "",
+      shipmentId: "",
     });
     setEditMode(false);
     setCurrentShipmentId(null);
@@ -209,12 +239,13 @@ const AdminDashboard = () => {
     }
   };
   const copyToClipboard = (trackingCode) => {
-    navigator.clipboard.writeText(trackingCode)
+    navigator.clipboard
+      .writeText(trackingCode)
       .then(() => {
         toast.success(`Tracking Code Copied!`);
       })
       .catch((err) => {
-        toast.error('Failed to copy tracking code');
+        toast.error("Failed to copy tracking code");
       });
   };
   // Filter shipments based on search criteria
@@ -310,13 +341,12 @@ const AdminDashboard = () => {
                     >
                       <p className="">{shipment.trackingCode}</p>
                       <div className="flex gap-[1rem]">
-                         
-                      <button
-                              onClick={() => copyToClipboard(shipment.trackingCode)}
-                              className="text-white"
-                            >
-                              <MdOutlineContentCopy />
-                            </button>
+                        <button
+                          onClick={() => copyToClipboard(shipment.trackingCode)}
+                          className="text-white"
+                        >
+                          <MdOutlineContentCopy />
+                        </button>
 
                         <button onClick={() => handleEditShipment(shipment)}>
                           <FaEdit className="fill-blue-400" />
@@ -389,7 +419,7 @@ const AdminDashboard = () => {
                         <label className="flex  gap-2">
                           Name:
                           <input
-                            className="px-1 w-full"
+                            className="px-1 w-full border-2 rounded-md"
                             type="text"
                             value={sender.name}
                             onChange={(e) =>
@@ -404,7 +434,7 @@ const AdminDashboard = () => {
                         <label className="flex gap-2">
                           Phone:
                           <input
-                            className="px-1 w-full"
+                            className="px-1 w-full border-2 rounded-md"
                             type="text"
                             value={sender.phone}
                             onChange={(e) =>
@@ -419,7 +449,7 @@ const AdminDashboard = () => {
                         <label className="flex gap-2">
                           Email:
                           <input
-                            className="px-1 w-full"
+                            className="px-1 w-full border-2 rounded-md"
                             type="email"
                             value={sender.email}
                             onChange={(e) =>
@@ -437,7 +467,7 @@ const AdminDashboard = () => {
                         <label className="flex gap-2">
                           Name:
                           <input
-                            className="px-1 w-full"
+                            className="px-1 w-full border-2 rounded-md"
                             type="text"
                             value={receiver.name}
                             onChange={(e) =>
@@ -452,7 +482,7 @@ const AdminDashboard = () => {
                         <label className="flex gap-2">
                           Phone:
                           <input
-                            className="px-1 w-full"
+                            className="px-1 w-full border-2 rounded-md"
                             type="text"
                             value={receiver.phone}
                             onChange={(e) =>
@@ -467,7 +497,7 @@ const AdminDashboard = () => {
                         <label className="flex gap-2">
                           Email:
                           <input
-                            className="px-1 w-full"
+                            className="px-1 w-full border-2 rounded-md"
                             type="email"
                             value={receiver.email}
                             onChange={(e) =>
@@ -500,6 +530,24 @@ const AdminDashboard = () => {
                         />
                       </label>
                       <label className="flex justify-between items-center gap-2">
+                        Current Country:
+                        <Select
+                          className="w-[65%]  md:w-[75%]"
+                          options={countryOptions}
+                          value={shipmentDetails.countryCurrent}
+                          onChange={(value) =>
+                            handleInputChange(
+                              {
+                                countryCurrent: value,
+                                countryCurrentTime: new Date(),
+                              },
+                              "shipmentDetails"
+                            )
+                          }
+                          required
+                        />
+                      </label>
+                      <label className="flex justify-between items-center gap-2">
                         Destination:
                         <Select
                           className=" w-[65%]  md:w-[75%]"
@@ -517,7 +565,7 @@ const AdminDashboard = () => {
                       <label className="flex w-full items-center justify-between gap-2">
                         Shipping Date:
                         <DatePicker
-                          className=" "
+                          className=" border-2 rounded-md"
                           selected={shipmentDetails.shippingDate}
                           onChange={(date) =>
                             handleDateChange(date, "shippingDate")
@@ -528,7 +576,7 @@ const AdminDashboard = () => {
                       <label className="flex w-full items-center justify-between gap-2">
                         Arrival Date:
                         <DatePicker
-                          className=" "
+                          className="border-2 rounded-md "
                           selected={shipmentDetails.arrivalDate}
                           onChange={(date) =>
                             handleDateChange(date, "arrivalDate")
@@ -539,7 +587,7 @@ const AdminDashboard = () => {
                       <label className="flex  justify-between">
                         Content:
                         <input
-                          className=" w-[65%] md:w-[75%]"
+                          className=" w-[65%] md:w-[75%] border-2 rounded-md"
                           type="text"
                           name="contentName"
                           value={shipmentDetails.contentName}
@@ -555,13 +603,29 @@ const AdminDashboard = () => {
                       <label className="flex justify-between ">
                         Custom Fee:
                         <input
-                          className="w-[65%]  md:w-[75%]"
+                          className="w-[65%]  md:w-[75%] border-2 rounded-md"
                           type="text"
                           name="customClearanceFee"
                           value={shipmentDetails.customClearanceFee}
                           onChange={(e) =>
                             handleInputChange(
                               { customClearanceFee: e.target.value },
+                              "shipmentDetails"
+                            )
+                          }
+                          required
+                        />
+                      </label>
+                      <label className="flex justify-between">
+                        Weight (kg):
+                        <input
+                          className="w-[65%] md:w-[75%] border-2 rounded-md"
+                          type="number"
+                          name="weight"
+                          value={shipmentDetails.weight}
+                          onChange={(e) =>
+                            handleInputChange(
+                              { weight: e.target.value },
                               "shipmentDetails"
                             )
                           }
