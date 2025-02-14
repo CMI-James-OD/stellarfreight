@@ -40,6 +40,7 @@ const UserPage = () => {
       if (!querySnapshot.empty) {
         const cargoData = querySnapshot.docs[0].data();
         setCargo(cargoData);
+        console.log(cargoData);
       } else {
         toast.error("Code not found");
         setCargo(null);
@@ -173,35 +174,43 @@ const UserPage = () => {
                     <div className="h-0.5 bg-gray-300 absolute w-full top-6" />
                     <div className="relative flex justify-between items-center">
                       <span className="text-sm flex-1 overflow-hidden text-ellipsis whitespace-nowrap text-left mt-1">
-                        {cargo.countryFrom.label
-                          .split(" ")
-                          .map((word, index) => (
-                            <span key={index} className="block">
-                              {word}
-                            </span>
-                          ))}
+                        {cargo?.countryFrom?.label
+                          ? cargo.countryFrom.label
+                              .split(" ")
+                              .map((word, index) => (
+                                <span key={index} className="block">
+                                  {word}
+                                </span>
+                              ))
+                          : "-"}
                       </span>
 
                       <div className="bg-yellow-100 p-3 rounded-lg text-center">
                         <span className="text-[10px]">Location</span>
                         <br />
                         <span className="text-xs ">
-                          {cargo.countryCurrent.label
-                            .split(" ")
-                            .map((word, index) => (
-                              <span key={index} className="block">
-                                {word}
-                              </span>
-                            ))}
+                          {cargo?.countryCurrent?.label
+                            ? cargo.countryCurrent.label
+                                .split(" ")
+                                .map((word, index) => (
+                                  <span key={index} className="block">
+                                    {word}
+                                  </span>
+                                ))
+                            : "-"}
                         </span>
                         <div className="w-3 h-3 bg-yellow-400 rounded-full mx-auto mt-1 animate-pulse" />
                       </div>
                       <span className="text-sm flex-1 overflow-hidden text-ellipsis whitespace-nowrap text-right mt-1">
-                        {cargo.countryTo.label.split(" ").map((word, index) => (
-                          <span key={index} className="block">
-                            {word}
-                          </span>
-                        ))}
+                        {cargo?.countryTo?.label
+                          ? cargo.countryTo.label
+                              .split(" ")
+                              .map((word, index) => (
+                                <span key={index} className="block">
+                                  {word}
+                                </span>
+                              ))
+                          : "-"}
                       </span>
                     </div>
                     <div className="mt-2 text-center">
@@ -249,7 +258,7 @@ const UserPage = () => {
                     <div className="grid grid-cols-3  p-2">
                       <span className="text-xs font-bold">From</span>
                       <span className="text-xs col-span-2">
-                        {cargo.countryFrom.label}
+                        {cargo?.countryFrom?.label || "-"}
                       </span>
                     </div>
                   </div>
@@ -279,7 +288,7 @@ const UserPage = () => {
                     <div className="grid grid-cols-3 p-2">
                       <span className="text-xs font-bold">To</span>
                       <span className="text-xs col-span-2">
-                        {cargo.countryTo.label}
+                        {cargo?.countryTo?.label || "-"}
                       </span>
                     </div>
                   </div>
@@ -361,7 +370,7 @@ const UserPage = () => {
                           {formatTimestamp(cargo.shippingDate)}
                         </td>
                         <td className="p-2 text-xs">
-                          {cargo.countryFrom.label}
+                          {cargo?.countryFrom?.label || "-"}
                         </td>
                         <td className="p-2 text-xs">
                           Parcel Shipped Successfully
@@ -373,10 +382,10 @@ const UserPage = () => {
                       <tr className="bg-white">
                         <td className="p-2 text-xs">2.</td>
                         <td className="p-2 text-xs">
-                          {formatTimestamp(cargo.countryCurrentTime)}
+                          {formatTimestamp(cargo?.countryCurrentTime) || "-"}
                         </td>
                         <td className="p-2 text-xs">
-                          {cargo.countryCurrent.label}
+                          {cargo?.countrycurrent?.label || "-"}
                         </td>
                         <td className="p-2 text-xs">
                           Parcel Stops For Customs Clearance
@@ -390,7 +399,9 @@ const UserPage = () => {
                         <td className="p-2 text-xs">
                           {formatTimestamp(cargo.arrivalDate)}
                         </td>
-                        <td className="p-2 text-xs">{cargo.countryTo.label}</td>
+                        <td className="p-2 text-xs">
+                          {cargo?.countryTo?.label || "-"}
+                        </td>
                         <td className="p-2 text-xs">
                           Parcel arrived at Destination
                         </td>
