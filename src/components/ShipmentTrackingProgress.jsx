@@ -61,7 +61,7 @@ const ShipmentProgressTracker = ({ cargo }) => {
 
   return (
     // Main container
-    <div className="relative w-full max-w-3xl mx-auto px-4 flex pt-12 flex-col gap-y-4">
+    <div className="relative w-full md:max-w-xl lg:max-w-3xl mx-auto px-4 flex pt-20 flex-col gap-y-4">
       <div className="relative">
         {/* Progress Bar Background - Increased height */}
         <div className="absolute h-2 w-full bg-gray-200 rounded-full" />

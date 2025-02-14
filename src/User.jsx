@@ -170,7 +170,7 @@ const UserPage = () => {
               <hr />
               {/* Route Map */}
               <div className="space-y-4">
-                <div className="p-6 pb-0 rounded-lg h-full ">
+                <div className=" rounded-lg h-full ">
                   <div className="relative">
                     <ShipmentProgressTracker cargo={cargo} />
                   </div>
@@ -179,7 +179,7 @@ const UserPage = () => {
 
               {/* Last Travel History */}
              <div className="w-full flex justify-center">
-             <div className="bg-orange-50 text-orange-400 w-full max-w-3xl   py-4 text-center">
+             <div className="bg-orange-50 text-orange-400 w-full max-w-xl xl:max-w-3xl   py-4 text-center">
                 <h3 className="text-xs  mb-3">
                   Last Travel History
                 </h3>
@@ -188,7 +188,7 @@ const UserPage = () => {
                 </p>
               </div>
              </div>
-
+<hr />
               {/* Contact Information */}
               <div className="grid md:grid-cols-2 gap-8">
                 <div>

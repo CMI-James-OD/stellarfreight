@@ -42,7 +42,7 @@ export default function TrackingProgress({ currentStatus }) {
                   <div className="w-2 h-2 rounded-full bg-gray-200" />
                 )}
               </div>
-              <span className="mt-2 text-sm font-medium text-gray-600">
+              <span className="mt-2 text-xs font-medium text-gray-600">
                 {stage.name}
               </span>
             </div>
