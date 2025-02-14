@@ -11,6 +11,7 @@ import TrackingProgress from "./components/TrackingProgress";
 import useFormattedDate from "./hooks/useFormattedDate";
 import Footer from "./components/Footer";
 import Partners from "./components/Partners";
+import ShipmentProgressTracker from "./components/ShipmentTrackingProgress";
 
 const transitionSettings = {
   duration: 0.8,
@@ -169,68 +170,24 @@ const UserPage = () => {
               <hr />
               {/* Route Map */}
               <div className="space-y-4">
-                <div className="bg-gray-50 p-6 rounded-lg">
+                <div className="p-6 pb-0 rounded-lg h-full ">
                   <div className="relative">
-                    <div className="h-0.5 bg-gray-300 absolute w-full top-6" />
-                    <div className="relative flex justify-between items-center">
-                      <span className="text-sm flex-1 overflow-hidden text-ellipsis whitespace-nowrap text-left mt-1">
-                        {cargo?.countryFrom?.label
-                          ? cargo.countryFrom.label
-                              .split(" ")
-                              .map((word, index) => (
-                                <span key={index} className="block">
-                                  {word}
-                                </span>
-                              ))
-                          : "-"}
-                      </span>
-
-                      <div className="bg-yellow-100 p-3 rounded-lg text-center">
-                        <span className="text-[10px]">Location</span>
-                        <br />
-                        <span className="text-xs ">
-                          {cargo?.countryCurrent?.label
-                            ? cargo.countryCurrent.label
-                                .split(" ")
-                                .map((word, index) => (
-                                  <span key={index} className="block">
-                                    {word}
-                                  </span>
-                                ))
-                            : "-"}
-                        </span>
-                        <div className="w-3 h-3 bg-yellow-400 rounded-full mx-auto mt-1 animate-pulse" />
-                      </div>
-                      <span className="text-sm flex-1 overflow-hidden text-ellipsis whitespace-nowrap text-right mt-1">
-                        {cargo?.countryTo?.label
-                          ? cargo.countryTo.label
-                              .split(" ")
-                              .map((word, index) => (
-                                <span key={index} className="block">
-                                  {word}
-                                </span>
-                              ))
-                          : "-"}
-                      </span>
-                    </div>
-                    <div className="mt-2 text-center">
-                      <span className="bg-yellow-400 text-xs px-2 py-1 rounded">
-                        {getStatusLabel(cargo.status)}
-                      </span>
-                    </div>
+                    <ShipmentProgressTracker cargo={cargo} />
                   </div>
                 </div>
               </div>
 
               {/* Last Travel History */}
-              <div className="bg-yellow-50  p-4 text-center">
-                <h3 className="text-xs text-gray-600 mb-3">
+             <div className="w-full flex justify-center">
+             <div className="bg-orange-50 text-orange-400 w-full max-w-3xl   py-4 text-center">
+                <h3 className="text-xs  mb-3">
                   Last Travel History
                 </h3>
-                <p className="text-gray-800">
+                <p className="">
                   {getStatusMessage(cargo.status)}
                 </p>
               </div>
+             </div>
 
               {/* Contact Information */}
               <div className="grid md:grid-cols-2 gap-8">
