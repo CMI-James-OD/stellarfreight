@@ -82,7 +82,7 @@ const UserPage = () => {
       <Header />
 
       {/* <div className="absolute inset-0  brightness-75 -z-10"></div> */}
-      <div className="min-h-screen  flex flex-col items-center bg-gray-200  pb-6 px-4 md:px-0">
+      <div className="min-h-screen  flex flex-col items-center bg-gray-100  pb-6 px-4 md:px-0">
         <div className="absolute inset-0  brightness-75 -z-10"></div>{" "}
         {!cargo && (
           <motion.form
