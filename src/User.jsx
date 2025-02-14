@@ -40,7 +40,6 @@ const UserPage = () => {
       if (!querySnapshot.empty) {
         const cargoData = querySnapshot.docs[0].data();
         setCargo(cargoData);
-        console.log(cargoData);
       } else {
         toast.error("Code not found");
         setCargo(null);
