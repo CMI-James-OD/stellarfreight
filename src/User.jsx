@@ -342,7 +342,7 @@ const UserPage = () => {
                           {formatTimestamp(cargo?.countryCurrentTime) || "-"}
                         </td>
                         <td className="p-2 text-xs">
-                          {cargo?.countrycurrent?.label || "-"}
+                          {cargo?.countryCurrent?.label || "-"}
                         </td>
                         <td className="p-2 text-xs">
                           Parcel Stops For Customs Clearance

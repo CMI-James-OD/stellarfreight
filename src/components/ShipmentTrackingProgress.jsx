@@ -122,7 +122,7 @@ const ShipmentProgressTracker = ({ cargo }) => {
         </span>
       </div>
       <div className="w-full flex justify-center ">
-        <div className=" grid grid-cols-5 grid-rows-1 gap-x-1 text-[9px]">
+        <div className=" grid grid-cols-5 grid-rows-1 gap-x-1 text-[9px] items-center">
           {/* Start label */}
           <span
             className={`text-center   ${
@@ -131,7 +131,7 @@ const ShipmentProgressTracker = ({ cargo }) => {
           >
             {renderCountryLabel(cargo?.countryFrom?.label || "Start")}
           </span>
-          <MoveRight className="text-gray-500" />
+          <MoveRight className="text-gray-500 text-center" />
           <span
             className={` text-center  ${
               currentPosition === "middle" ? "text-orange-500" : "text-gray-400"
@@ -139,7 +139,7 @@ const ShipmentProgressTracker = ({ cargo }) => {
           >
             {renderCountryLabel(cargo?.countryCurrent?.label || "Middle")}
           </span>
-          <MoveRight className="text-gray-500" />
+          <MoveRight className="text-gray-500 text-center" />
           <span
             className={`text-center  ${
               currentPosition === "end" ? "text-orange-500" : "text-gray-400"
