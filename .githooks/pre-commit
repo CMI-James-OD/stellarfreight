@@ -1,0 +1,43 @@
+#!/bin/bash
+# StellarFreight — Pre-Commit Hook
+# Formats staged Rust contract files and lints staged frontend files.
+# Enable: git config core.hooksPath .githooks  (or run scripts/setup-hooks.sh)
+set -e
+
+echo "🔍 Running pre-commit checks..."
+
+REPO_ROOT="$(git rev-parse --show-toplevel)"
+STAGED=$(git diff --cached --name-only)
+
+# ── 1. Format touched Rust contract crates ────────────────────────────────────
+if command -v cargo >/dev/null 2>&1; then
+  FORMATTED_ANY=0
+  for crate_dir in "$REPO_ROOT"/contracts/*/; do
+    crate=$(basename "$crate_dir")
+    [ -f "$crate_dir/Cargo.toml" ] || continue
+    [ -d "$crate_dir/src" ] || continue
+    if echo "$STAGED" | grep -q "^contracts/$crate/"; then
+      echo "🦀 Formatting $crate..."
+      (cd "$crate_dir" && cargo fmt --all)
+      FORMATTED_ANY=1
+    fi
+  done
+  [ $FORMATTED_ANY -eq 0 ] && echo "ℹ️  No contract crates staged — skipping Rust formatting."
+else
+  echo "⚠️  Cargo not found — skipping Rust formatting."
+fi
+
+# ── 2. Lint staged frontend files ─────────────────────────────────────────────
+if echo "$STAGED" | grep -q "^frontend/"; then
+  echo "⚡ Linting frontend..."
+  if command -v npm >/dev/null 2>&1; then
+    (cd "$REPO_ROOT/frontend" && npm run lint --silent)
+  else
+    echo "⚠️  npm not found — skipping frontend lint."
+  fi
+fi
+
+# ── 3. Re-stage auto-formatted files ──────────────────────────────────────────
+git add -u
+
+echo "✅ Pre-commit checks passed!"
