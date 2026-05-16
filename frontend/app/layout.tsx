@@ -18,11 +18,11 @@ export const metadata: Metadata = {
     apple: "/icon.svg",
   },
   title: {
-    default: "StellarFreight — Stellar-Powered Global Freight",
+    default: "StellarFreight — Global Freight, Instant Payments",
     template: "%s | StellarFreight",
   },
   description:
-    "StellarFreight is building a modern logistics platform with streamlined digital payments and transparent shipment tracking.",
+    "StellarFreight is a modern logistics platform combining enterprise shipment tracking with blockchain-powered payments for cross-border freight.",
   keywords: [
     "logistics",
     "freight",
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     "shipment tracking",
   ],
   openGraph: {
-    title: "StellarFreight — Stellar-Powered Global Freight",
+    title: "StellarFreight — Global Freight, Instant Payments",
     description:
       "Modern freight operations with transparent payment and tracking workflows.",
     type: "website",
