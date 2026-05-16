@@ -2,23 +2,59 @@ name: Contracts CI
 
 on:
   push:
+    branches: [main, develop]
     paths:
       - "contracts/**"
   pull_request:
+    branches: [main, develop]
     paths:
       - "contracts/**"
 
 jobs:
-  check:
+  fmt:
+    name: Rust Format Check
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: contracts
     steps:
       - uses: actions/checkout@v4
-      - uses: actions-rs/toolchain@v1
+      - uses: dtolnay/rust-toolchain@stable
         with:
-          toolchain: stable
-          target: wasm32-unknown-unknown
-          override: true
-      - run: cargo check
+          components: rustfmt
+      - name: Check formatting — escrow
+        run: cd contracts/escrow && cargo fmt --all -- --check
+
+  clippy:
+    name: Clippy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+          components: clippy
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            contracts/target
+          key: ${{ runner.os }}-cargo-${{ hashFiles('contracts/**/Cargo.toml') }}
+      - name: Clippy — escrow
+        run: cd contracts/escrow && cargo clippy --all-targets --all-features -- -D warnings
+
+  test:
+    name: Cargo Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            contracts/target
+          key: ${{ runner.os }}-cargo-${{ hashFiles('contracts/**/Cargo.toml') }}
+      - name: Test — escrow
+        run: cd contracts/escrow && cargo test --locked

@@ -1,0 +1,105 @@
+#!/bin/bash
+# StellarFreight — Pre-Push Hook
+# Runs strict checks on any contract / frontend files touched since the last push.
+# Enable: git config core.hooksPath .githooks  (or run scripts/setup-hooks.sh)
+set -euo pipefail
+
+REPO_ROOT="$(git rev-parse --show-toplevel)"
+FAIL=0
+
+echo "🚀 Running pre-push verification..."
+
+# ── Collect changed files in this push ────────────────────────────────────────
+CHANGED_FILES=""
+while IFS=" " read -r local_ref local_sha remote_ref remote_sha; do
+  [ "$local_sha" = "0000000000000000000000000000000000000000" ] && continue
+  if [ "$remote_sha" = "0000000000000000000000000000000000000000" ]; then
+    BASE=$(git merge-base HEAD main 2>/dev/null || echo "")
+    RANGE="${BASE:+$BASE..}$local_sha"
+  else
+    RANGE="$remote_sha..$local_sha"
+  fi
+  CHANGED_FILES="$CHANGED_FILES$(git diff --name-only "$RANGE" 2>/dev/null)"$'\n'
+done
+
+# ── 1. Contracts — fmt + clippy + test ────────────────────────────────────────
+if command -v cargo >/dev/null 2>&1; then
+  TOUCHED_CRATES=()
+  for crate_dir in "$REPO_ROOT"/contracts/*/; do
+    crate=$(basename "$crate_dir")
+    [ -f "$crate_dir/Cargo.toml" ] || continue
+    [ -d "$crate_dir/src" ] || continue
+    if echo "$CHANGED_FILES" | grep -q "^contracts/$crate/"; then
+      TOUCHED_CRATES+=("$crate")
+    fi
+  done
+
+  if [ ${#TOUCHED_CRATES[@]} -gt 0 ]; then
+    echo "🦀 Strict Rust checks on: ${TOUCHED_CRATES[*]}"
+    for crate in "${TOUCHED_CRATES[@]}"; do
+      CRATE_DIR="$REPO_ROOT/contracts/$crate"
+
+      echo "  [$crate] cargo fmt --check"
+      if ! (cd "$CRATE_DIR" && cargo fmt --all -- --check 2>&1); then
+        echo "❌ fmt failed in $crate — run: cd contracts/$crate && cargo fmt --all"
+        FAIL=1
+      fi
+
+      echo "  [$crate] cargo clippy"
+      if ! (cd "$CRATE_DIR" && cargo clippy --all-targets --all-features -- -D warnings 2>&1); then
+        echo "❌ clippy failed in $crate — resolve all warnings before pushing."
+        FAIL=1
+      fi
+
+      echo "  [$crate] cargo test"
+      if ! (cd "$CRATE_DIR" && cargo test 2>&1); then
+        echo "❌ Tests failed in $crate — run: cd contracts/$crate && cargo test"
+        FAIL=1
+      fi
+    done
+  else
+    echo "ℹ️  No contract crates changed — skipping Rust checks."
+  fi
+else
+  echo "⚠️  Cargo not found. Install Rust: https://rustup.rs"
+fi
+
+# ── 2. Frontend — lint + typecheck + test ─────────────────────────────────────
+FRONTEND_CHANGED=$(echo "$CHANGED_FILES" | grep "^frontend/" || true)
+if [ -n "$FRONTEND_CHANGED" ]; then
+  echo "⚡ Verifying frontend..."
+  if command -v npm >/dev/null 2>&1; then
+
+    echo "  [frontend] lint"
+    if ! (cd "$REPO_ROOT/frontend" && npm run lint 2>&1); then
+      echo "❌ Frontend lint failed — run: cd frontend && npm run lint"
+      FAIL=1
+    fi
+
+    echo "  [frontend] typecheck"
+    if ! (cd "$REPO_ROOT/frontend" && npm run typecheck 2>&1); then
+      echo "❌ Frontend typecheck failed — run: cd frontend && npm run typecheck"
+      FAIL=1
+    fi
+
+    echo "  [frontend] test"
+    if ! (cd "$REPO_ROOT/frontend" && npm test 2>&1); then
+      echo "❌ Frontend tests failed — run: cd frontend && npm test"
+      FAIL=1
+    fi
+
+  else
+    echo "⚠️  npm not found. Install Node.js: https://nodejs.org"
+  fi
+else
+  echo "ℹ️  No frontend files changed — skipping frontend checks."
+fi
+
+# ── Result ────────────────────────────────────────────────────────────────────
+if [ $FAIL -ne 0 ]; then
+  echo ""
+  echo "❌ Pre-push checks failed. Push aborted."
+  exit 1
+fi
+
+echo "✅ All checks passed. Pushing..."
