@@ -31,7 +31,6 @@ const Services = () => {
       <Support />
       <hr />
       <Footer />
-      <Footer />
     </div>
   );
 };

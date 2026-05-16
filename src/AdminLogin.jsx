@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { auth } from "./firebaseConfig";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import "./AdminLogin.css";
 import header_logo from "/images/header_logo.svg";
 import { TailSpin } from "react-loader-spinner";
 import { FaArrowLeft } from "react-icons/fa6";
@@ -54,8 +53,12 @@ const AdminLogin = () => {
   };
 
   return (
-    <div className="h-screen w-full flex justify-center items-center flex-col admin">
-      <div className="h-[70%] lg:h-[90%] bg-opacity-90 w-[90%] lg:w-[40%] bg-white flex items-center justify-center gap-[3rem] flex-col rounded-md relative">
+    <div
+      className="relative h-screen w-full flex justify-center items-center flex-col bg-cover bg-center"
+      style={{ backgroundImage: "url('/images/admin.jpg')" }}
+    >
+      <div className="absolute inset-0 bg-black/45" />
+      <div className="z-10 h-[70%] lg:h-[90%] bg-opacity-90 w-[90%] lg:w-[40%] bg-white flex items-center justify-center gap-[3rem] flex-col rounded-md relative">
         <Link to="/">
           <div className="absolute top-4 left-4">
             {" "}

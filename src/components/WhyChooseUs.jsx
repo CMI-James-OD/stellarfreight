@@ -1,21 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
 import { IoIosPin } from "react-icons/io";
 import { FiBox } from "react-icons/fi";
 import { BiSupport } from "react-icons/bi";
-import whychooseus from "/images/whychooseus.jpg";
-import "./WhyChooseUs.css";
 import { TbWorld } from "react-icons/tb";
-import { FaRegPlayCircle } from "react-icons/fa";
 import { IoPlayCircleOutline } from "react-icons/io5";
 const WhyChooseUs = () => {
-  const [videoPlaying, setVideoPlaying] = useState(false);
-
   const features = [
     {
       icon: <TbWorld className=" h-[2rem] w-[2rem]" />,
       title: "GLOBAL COVERAGE",
       description:
-        "Everyone recognizes the distinctive Sea Wave Logistics vehicle that stops right at your door. Our dedication to reliability, speed, and transparency guarantees that every parcel arrives safely and on time.",
+        "Everyone recognizes the distinctive Trustway Logistics vehicle that stops right at your door. Our dedication to reliability, speed, and transparency keeps every parcel on track with clear operational updates.",
     },
     {
       icon: <IoIosPin className=" h-[2rem] w-[2rem]" />,
@@ -37,19 +32,19 @@ const WhyChooseUs = () => {
     },
   ];
 
-  const toggleVideo = () => {
-    setVideoPlaying(!videoPlaying);
-  };
-
   return (
     <section className="bg-grey-450 text-white py-20">
       <div className="lg:px-24 py-20 px-4 sm:px-6  flex flex-col md:flex-row  gap-10 items-center  justify-between">
-       <div className=" z-20 w-full p-3   md:w-1/2 mb-6 md:mb-0">
-       <div className="whychooseus ">
-       <div className="absolute inset-0 flex justify-center items-center z-10">
-        <IoPlayCircleOutline   className="text-orange-450 cursor-pointer  text-8xl" />
-      </div>
-       </div>
+       <div className=" z-20 w-full p-3 md:w-1/2 mb-6 md:mb-0">
+        <div
+          className="relative flex h-[70vh] md:h-[100vh] overflow-hidden"
+          style={{ backgroundImage: "url('/images/whychooseus.jpg')", backgroundSize: "cover", backgroundPosition: "center" }}
+        >
+          <div className="absolute inset-0 bg-black/45" />
+          <div className="absolute inset-0 flex justify-center items-center z-10">
+            <IoPlayCircleOutline className="text-orange-450 cursor-pointer text-8xl" />
+          </div>
+        </div>
        </div>
 
         <div className="w-full md:w-1/2">
@@ -59,7 +54,8 @@ const WhyChooseUs = () => {
             At Trustway Logistics, we prioritize long-term strategic
             partnerships with our customers. We are personally dedicated to
             exceeding expectations by offering advanced and customized services
-            worldwide.
+            worldwide, with a growing Stellar-focused payment pathway for
+            cross-border shipment settlement visibility.
           </p>
           <ul className="p-0">
             {features.map((feature) => (
