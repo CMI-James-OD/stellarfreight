@@ -5,3 +5,15 @@ coverage
 .env*
 !.env.example
 *.tsbuildinfo
+
+# Frontend
+frontend/.next/
+frontend/node_modules/
+frontend/.env
+frontend/.env.local
+
+# Contracts
+contracts/target/
+
+# Backend
+backend/node_modules/

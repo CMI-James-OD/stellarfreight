@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-labelledby="title">
+  <title id="title">STFR Logo</title>
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#fb923c"/>
+      <stop offset="100%" stop-color="#14b8a6"/>
+    </linearGradient>
+  </defs>
+  <rect x="24" y="24" width="464" height="464" rx="96" fill="#0b1220"/>
+  <rect x="52" y="52" width="408" height="408" rx="76" fill="none" stroke="url(#g)" stroke-width="10"/>
+  <text x="256" y="288" text-anchor="middle" font-family="Poppins, Plus Jakarta Sans, Segoe UI, Arial, sans-serif" font-size="148" font-weight="800" letter-spacing="6" fill="#ffffff">STFR</text>
+</svg>

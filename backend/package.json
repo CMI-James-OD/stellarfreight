@@ -1,0 +1,6 @@
+{
+  "name": "@stellarfreight/backend",
+  "version": "0.1.0",
+  "description": "StellarFreight backend API - Express + stellar-sdk (coming soon)",
+  "private": true
+}
