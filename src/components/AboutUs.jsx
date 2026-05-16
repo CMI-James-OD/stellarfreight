@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import signature from "/images/sig.png";
+const signature = "/images/sig.png";
 import { Link } from "react-router-dom";
 import { truncateText } from "../utils/utils";
 import { aboutus } from "../data/home";
@@ -34,8 +34,9 @@ const AboutHome = ({ isTruncated }) => {
             solutions encompassing road, air, and rail transport, we specialize
             in facilitating seamless connections across the globe. Our
             commitment to excellence ensures dependable and efficient logistics
-            services worldwide, meeting the diverse needs of our global
-            clientele with precision and reliability.
+            services worldwide. We are also advancing a Stellar-focused payment
+            model to support faster settlement visibility, clearer payment
+            status tracking, and smoother cross-border shipment operations.
           </p>
         </motion.div>
 
@@ -93,7 +94,8 @@ const AboutHome = ({ isTruncated }) => {
             your parcel is dispatched. Any shipping irregularities are promptly
             highlighted in our user-friendly dashboard. With a few simple
             clicks, you can generate detailed shipping reports, ensuring
-            seamless integration with your logistics operations.
+            seamless integration with your logistics operations and payment
+            confirmations powered through Stellar-focused workflows.
           </p>
         </motion.div>
 

@@ -1,14 +1,14 @@
 import { GiWorld } from "react-icons/gi";
 import { IoMdFingerPrint } from "react-icons/io";
 import { IoGift } from "react-icons/io5";
-import truck from "/images/truck4.jpg";
-import airplane from "/images/airplane.jpg";
-import ship_ from "/images/ship_.jpeg";
-import courier from "/images/courier.jpg";
-import dog from "/images/dog.jpg";
-import railway from "/images/railway.jpg";
-import warehousing from "/images/warehousing.jpg";
-import pas from "/images/pas.jpg";
+const truck = "/images/truck4.jpg";
+const airplane = "/images/airplane.jpg";
+const ship_ = "/images/ship_.jpeg";
+const courier = "/images/courier.jpg";
+const dog = "/images/dog.jpg";
+const railway = "/images/railway.jpg";
+const warehousing = "/images/warehousing.jpg";
+const pas = "/images/pas.jpg";
 import { FaHouseChimney } from "react-icons/fa6";
 import { VscPackage } from "react-icons/vsc";
 import { MdDirectionsRailwayFilled } from "react-icons/md";
@@ -44,7 +44,7 @@ export const services = [
     id: 2,
     title: "AIR FREIGHT",
     description:
-      "Need a one-stop solution for your international air freight and forwarding needs, whereas a faster, safer and cost effective way to ship and track your cargo by air to anywhere across the globe? Look no further than Sea Wave Logistics, for we take it there.",
+      "Need a one-stop solution for your international air freight and forwarding needs, whereas a faster, safer and cost effective way to ship and track your cargo by air to anywhere across the globe? Look no further than Trustway Logistics, for we take it there.",
     image: airplane,
     alt: "Air Freight",
   },
@@ -130,21 +130,21 @@ export const moreServices = [
     icon: FaHouseChimney,
     title: "WAREHOUSING",
     description:
-      "Sea Wave Logistics as a Warehousing Agent, provides high level professional warehousing services assuring the safe arrival of your shipment.",
+      "Trustway Logistics as a Warehousing Agent, provides high level professional warehousing services assuring the safe arrival of your shipment.",
   },
   {
     id: 2,
     icon: VscPackage,
     title: "PACKAGING AND STORAGE",
     description:
-      "Sea Wave Logistics has designed a customized packaging solutions specifically for the prevention of transit damages like breakages, scratches, abrasions etc.",
+      "Trustway Logistics has designed a customized packaging solutions specifically for the prevention of transit damages like breakages, scratches, abrasions etc.",
   },
   {
     id: 3,
     icon: MdDirectionsRailwayFilled,
     title: "RAILWAY LOGISTICS",
     description:
-      "Sea Wave Logistics Rail Freight services have been designed for those clients who require a safe and efficient way to move their cargo from places in mint condition.",
+      "Trustway Logistics Rail Freight services have been designed for those clients who require a safe and efficient way to move their cargo from places in mint condition.",
   },
 ];
 export const teamMembers = [

@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Card } from "../../components/ui/card";
+import { Button } from "../../components/ui/button";
 
 const FAQComponent= () => {
   const [open, setOpen] = useState(null);
@@ -9,30 +11,32 @@ const FAQComponent= () => {
   };
 
   return (
-    <div className="w-full lg:px-24 px-4 py-20">
+    <div className="w-full lg:px-24 px-4 py-20 bg-slate-50">
       <h2 className="text-3xl font-bold mb-4">FAQs</h2>
       <p className="mb-6">
         Whether you've missed a delivery, want to track your parcel, or just have a few questions about your shipment, we're there to help as soon as we can. We've also put together a list of FAQs that may just provide an answer to your question. If they don't, please get in touch with our contact center.
       </p>
       <div className="space-y-4">
         {faqData.map((faq, index) => (
-          <div key={index} className="border-b">
+          <Card key={index} className="border border-slate-200">
             <button
               onClick={() => toggle(index)}
-              className="flex justify-between w-full text-left py-4 text-lg font-medium text-gray-700 focus:outline-none"
+              className="flex justify-between w-full text-left py-4 px-4 text-lg font-medium text-gray-700 focus:outline-none"
             >
               {faq.question}
               <span>{open === index ? '-' : '+'}</span>
             </button>
             {open === index && (
-              <div className="py-2 text-gray-600">
+              <div className="py-2 px-4 text-gray-600">
                 {faq.answer}
               </div>
             )}
-          </div>
+          </Card>
         ))}
       </div>
-      <Link to="/faqs" className="text-orange-500 mt-4 inline-block hover:underline">Get More Answers</Link>
+      <Link to="/faqs" className="mt-5 inline-block">
+        <Button className="bg-orange-500 hover:bg-orange-600">Get More Answers</Button>
+      </Link>
     </div>
   );
 };

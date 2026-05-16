@@ -3,7 +3,6 @@ import { BiSolidPhoneCall } from "react-icons/bi";
 import { FaLocationDot } from "react-icons/fa6";
 import { MdOutlineEmail } from "react-icons/md";
 import AOS from "aos";
-import "aos/dist/aos.css";
 
 const contactDetails = [
   {

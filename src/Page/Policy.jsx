@@ -6,7 +6,7 @@ const policyData = [
     subsections: [
       {
         title: "COLLECTION AND PROCESSING OF PERSONAL DATA",
-        content: `Sea Wave Logistics is committed to preserving the privacy of users of our websites. When you visit our web pages, our web servers always temporarily save for security purposes the connection data of the computer connecting to our site, a list of the web pages that you visit within our site, the date and duration of your visit, the identification data of the type of browser and operation system used as well as the website through which you linked to our site. Additional personal information such as your name, address, telephone number or e-mail address is not collected unless you provide this data voluntarily, e.g. while completing an online contact form, as part of a registration, survey, competition, fulfillment of contract or an information request.`,
+        content: `Trustway Logistics is committed to preserving the privacy of users of our websites. When you visit our web pages, our web servers always temporarily save for security purposes the connection data of the computer connecting to our site, a list of the web pages that you visit within our site, the date and duration of your visit, the identification data of the type of browser and operation system used as well as the website through which you linked to our site. Additional personal information such as your name, address, telephone number or e-mail address is not collected unless you provide this data voluntarily, e.g. while completing an online contact form, as part of a registration, survey, competition, fulfillment of contract or an information request.`,
       },
       {
         title: "UTILIZATION AND PASSING ON OF PERSONAL DATA",
@@ -37,7 +37,7 @@ const policyData = [
     subsections: [
       {
         title: "PROTECTION OF YOUR PERSONAL DATA",
-        content: `Sea Wave Logistics takes all of the necessary technical and organizational security measures to protect your personal data from being lost or misused. For instance, your data is saved in a secure operating environment which is not accessible to the public. In certain cases, your personal data is encrypted by Secure Socket Layer technology (SSL) during transmission. This means that an approved encryption procedure is used for communication between your computer and the Sea Wave Logistics servers if your browser supports SSL.`,
+        content: `Trustway Logistics takes all of the necessary technical and organizational security measures to protect your personal data from being lost or misused. For instance, your data is saved in a secure operating environment which is not accessible to the public. In certain cases, your personal data is encrypted by Secure Socket Layer technology (SSL) during transmission. This means that an approved encryption procedure is used for communication between your computer and the Trustway Logistics servers if your browser supports SSL.`,
       },
     ],
   },
@@ -50,7 +50,7 @@ const policyData = [
       },
       {
         title: "Salesforce Marketing Cloud Tracking Cookie",
-        content: `The content of this persistent tracking cookie is limited to an identification number and is generally used in exactly the same way as all of our other persistent cookies. However, if you are already a Sea Wave Logistics customer contact or you contact Sea Wave Logistics using certain online contact forms in the Logistics content area, your email address is added to the cookie to create an individual profile of your online activities. These same contact forms also provide you with an option to sign up for email marketing updates. By giving your permission, this also allows us to provide you with personalized content, offers or promotions that may interest you. Should you choose not to sign up for email marketing updates, you will not be contacted in the future and your email address will only be used confidentially by Sea Wave Logistics internally to understand your individual online activities. This means that we can still continue to deliver new and improved website content to suit your specific needs. You can learn more about the Salesforce Marketing Cloud Tracking cookie in the Sea Wave Logistics list of Cookies below. Alternatively, to opt out of being tracked by Salesforce Marketing Cloud across all websites (or to reverse your setting if you have previously opted out), you can do so under 'How to Manage Cookies' below.`,
+        content: `The content of this persistent tracking cookie is limited to an identification number and is generally used in exactly the same way as all of our other persistent cookies. However, if you are already a Trustway Logistics customer contact or you contact Trustway Logistics using certain online contact forms in the Logistics content area, your email address is added to the cookie to create an individual profile of your online activities. These same contact forms also provide you with an option to sign up for email marketing updates. By giving your permission, this also allows us to provide you with personalized content, offers or promotions that may interest you. Should you choose not to sign up for email marketing updates, you will not be contacted in the future and your email address will only be used confidentially by Trustway Logistics internally to understand your individual online activities. This means that we can still continue to deliver new and improved website content to suit your specific needs. You can learn more about the Salesforce Marketing Cloud Tracking cookie in the Trustway Logistics list of Cookies below. Alternatively, to opt out of being tracked by Salesforce Marketing Cloud across all websites (or to reverse your setting if you have previously opted out), you can do so under 'How to Manage Cookies' below.`,
       },
     ],
   },
@@ -59,7 +59,7 @@ const policyData = [
     subsections: [
       {
         title: "LIST OF COOKIES AND CATEGORIZATION",
-        content: `We have provided details of all cookies used on Sea Wave Logistics websites in the list below. All cookies in the list above have been categorized according to 4 numbered groups. The categories are as follows:
+        content: `We have provided details of all cookies used on Trustway Logistics websites in the list below. All cookies in the list above have been categorized according to 4 numbered groups. The categories are as follows:
   1. Strictly Necessary: These cookies are essential in order to enable you to move around the website and use its features. Without these cookies, services you have asked for cannot be provided.
   2. Performance: These cookies collect information about how visitors use a website, for instance which pages visitors go to most often. These cookies don’t collect information that identifies a visitor. All information these cookies collect is aggregated and therefore anonymous. It is only used to improve how a website works.`,
       },

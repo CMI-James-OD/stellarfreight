@@ -2,10 +2,13 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import "./Hero.css";
-import ship_logo from "/images/ship.svg";
-import search_logo from "/images/search.svg";
-import support_logo from "/images/support.svg";
+import { TailSpin } from "react-loader-spinner";
+import { Card } from "../../components/ui/card";
+import { Button } from "../../components/ui/button";
+import { Input } from "../../components/ui/input";
+const ship_logo = "/images/ship.svg";
+const search_logo = "/images/search.svg";
+const support_logo = "/images/support.svg";
 
 const transitionSettings = {
   duration: 0.8,
@@ -20,14 +23,19 @@ const Hero = () => {
   const handleTrackClick = () => {
     setIsLoading(true);
     if (trackingCode.trim()) {
-      navigate(`/userpage/${trackingCode}`);
+      navigate(`/track/${trackingCode}`);
     }
     setIsLoading(false);
   };
 
   return (
-    <div className="hero h-[90vh] w-full flex justify-center items-center mt-[7rem] lg:mt-[10rem]">
-      <div className="text-white text-center w-[90%] lg:w-[50%] flex flex-col justify-center items-center gap-6">
+    <div className="relative isolate mt-[7rem] flex min-h-[90vh] w-full items-center justify-center overflow-hidden lg:mt-[10rem]">
+      <div
+        className="absolute inset-0 bg-cover bg-center"
+        style={{ backgroundImage: "url('/images/hero.jpg')", filter: "brightness(42%)" }}
+      />
+      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(6,12,20,0.35)_0%,rgba(6,12,20,0.72)_85%),radial-gradient(circle_at_10%_20%,rgba(232,119,46,0.28),transparent_42%)]" />
+      <div className="text-white text-center w-[90%] lg:w-[55%] flex flex-col justify-center items-center gap-6">
         <motion.h1
           className="text-[30px] lg:text-[35px] font-semibold"
           initial={{ opacity: 0, y: 50 }}
@@ -45,21 +53,21 @@ const Hero = () => {
           LOGISTICS | CARGO | WAREHOUSING
         </motion.p>
         <motion.div
-          className="flex w-full text-center text-black text-[1rem] text-opacity-60 font-semibold border-zinc-500"
+          className="grid w-full grid-cols-3 gap-3 text-center text-black text-[1rem] text-opacity-60 font-semibold border-zinc-500"
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ ...transitionSettings, delay: 0.4 }}
         >
-          <div className="flex-1 bg-white py-6 flex flex-col gap-2 justify-center items-center">
+          <Card className="flex-1 bg-white py-6 flex flex-col gap-2 justify-center items-center">
             <img src={ship_logo} className="w-8 lg:w-10" alt="Ship" /> Ship
-          </div>
-          <div className="bg-[#0b181e] text-white gap-1 flex-1 py-6 flex flex-col justify-center items-center">
+          </Card>
+          <Card className="bg-[#0b181e] border-[#0b181e] text-white gap-1 flex-1 py-6 flex flex-col justify-center items-center">
             <img src={search_logo} className="w-10 lg:w-14" alt="Track" /> Track
-          </div>
-          <div className="flex-1 bg-white py-6 flex flex-col gap-1 justify-center items-center">
+          </Card>
+          <Card className="flex-1 bg-white py-6 flex flex-col gap-1 justify-center items-center">
             <img src={support_logo} className="w-8 lg:w-10" alt="Support" />{" "}
             Support
-          </div>
+          </Card>
         </motion.div>
         <motion.div
           className="flex items-center w-full justify-center gap-2"
@@ -67,16 +75,16 @@ const Hero = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ ...transitionSettings, delay: 0.7 }}
         >
-          <input
+          <Input
             type="text"
             placeholder="Tracking ID"
             value={trackingCode}
             onChange={(e) => setTrackingCode(e.target.value)}
-            className="border w-full border-gray-300 p-3 focus:outline-none focus:ring-2 focus:ring-[#e8772e] text-black"
+            className="w-full h-12 border-gray-300 bg-white text-black"
           />
-          <button
+          <Button
             onClick={handleTrackClick}
-            className="bg-[#e8772e] flex items-center justify-center text-white p-3 px-6 lg:px-[2rem] hover:bg-[#e8772e] focus:outline-none focus:ring-2 focus:ring-[#e8772e]"
+            className="h-12 bg-[#e8772e] flex items-center justify-center text-white px-6 lg:px-[2rem] hover:bg-[#e8772e]"
           >
             {isLoading ? (
               <TailSpin
@@ -92,7 +100,7 @@ const Hero = () => {
             ) : (
               "Search"
             )}
-          </button>
+          </Button>
         </motion.div>
       </div>
     </div>

@@ -54,7 +54,7 @@ const Home = () => {
   }, [location]);
 
   return imagesLoaded ? (
-    <div className="relative">
+    <div className="relative bg-[#f6f8fb]">
       <Header />
       <a
         href="https://wa.me/2348148001157"
@@ -64,28 +64,36 @@ const Home = () => {
       >
         <IoLogoWhatsapp className="w-8 h-8" />
       </a>
-      <Hero />
-      <hr />
-      <AboutHome isTruncated={true} />
-      <hr />
-      <ServicesComponent showAll={false}/>
-      <hr />
-      <WhyChooseUs />
-      <hr />
-      <MoreServices />
-      {/* <hr />
-      <ImageCarousel /> */}
-      <hr />
-      <TeamComponent />
-      <hr />
-      <FAQComponent/>
-      <hr />
-      <ClientCarousel />
-      <hr />
-      <Support />
-      <hr />
-      <Partners />
-      <hr />
+      <section className="relative overflow-hidden">
+        <Hero />
+      </section>
+      <section className="relative bg-white border-t border-slate-200/70">
+        <AboutHome isTruncated={true} />
+      </section>
+      <section className="relative bg-gradient-to-b from-slate-50 to-white border-t border-slate-200/70">
+        <ServicesComponent showAll={false}/>
+      </section>
+      <section className="relative border-t border-slate-200/70">
+        <WhyChooseUs />
+      </section>
+      <section className="relative bg-white border-t border-slate-200/70">
+        <MoreServices />
+      </section>
+      <section className="relative bg-gradient-to-b from-white to-slate-50 border-t border-slate-200/70">
+        <TeamComponent />
+      </section>
+      <section className="relative bg-white border-t border-slate-200/70">
+        <FAQComponent/>
+      </section>
+      <section className="relative bg-gradient-to-b from-slate-50 to-white border-t border-slate-200/70">
+        <ClientCarousel />
+      </section>
+      <section className="relative bg-white border-t border-slate-200/70">
+        <Support />
+      </section>
+      <section className="relative bg-gradient-to-b from-slate-50 to-white border-t border-slate-200/70">
+        <Partners />
+      </section>
       <Footer />
     </div>
   ) : (
