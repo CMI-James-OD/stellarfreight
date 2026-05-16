@@ -1,0 +1,82 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum ShipmentStatus {
+  processed
+  shipped
+  en_route
+  arrived
+}
+
+enum PaymentStatus {
+  unpaid
+  pending
+  confirmed
+  released
+  refunded
+}
+
+model Shipment {
+  id                    String         @id @default(uuid()) @db.Uuid
+  tracking_code         String         @unique
+  shipment_id           String         @unique
+  sender_name           String
+  sender_phone          String
+  sender_email          String
+  receiver_name         String
+  receiver_phone        String
+  receiver_email        String
+  content_name          String
+  country_from_code     String
+  country_from_name     String
+  country_to_code       String
+  country_to_name       String
+  country_current_code  String?
+  country_current_name  String?
+  custom_clearance_fee  String
+  weight_kg             Float?
+  status                ShipmentStatus
+  shipping_date         DateTime
+  arrival_date          DateTime
+  current_location_time DateTime?
+  created_at            DateTime       @default(now())
+  updated_at            DateTime       @updatedAt
+  shipper_wallet_address  String?
+  escrow_contract_address String?
+  stellar_tx_hash         String?
+  payment_status          PaymentStatus @default(unpaid)
+  payment_amount_usdc     Float?
+  payment_confirmed_at    DateTime?
+  escrow_released_at      DateTime?
+
+  @@map("shipments")
+}
+
+model AdminUser {
+  id            String         @id @default(uuid()) @db.Uuid
+  email         String         @unique
+  password_hash String
+  created_at    DateTime       @default(now())
+  updated_at    DateTime       @updatedAt
+  sessions      AdminSession[]
+
+  @@map("admin_users")
+}
+
+model AdminSession {
+  id         String    @id @default(uuid()) @db.Uuid
+  token_hash String    @unique
+  user_id    String    @db.Uuid
+  expires_at DateTime
+  created_at DateTime  @default(now())
+  user       AdminUser @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@index([user_id])
+  @@index([expires_at])
+  @@map("admin_sessions")
+}
