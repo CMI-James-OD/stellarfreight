@@ -7,12 +7,17 @@ export default defineConfig({
       "@": path.resolve(__dirname, "."),
     },
   },
+  // Override postcss at the Vite level with an empty config so Vite never
+  // searches for or loads postcss.config.mjs at startup. Without this, Vite
+  // auto-discovers the file and tries to load @tailwindcss/postcss →
+  // lightningcss → platform-specific native binary, which is missing from
+  // the Windows-generated lockfile on Linux CI runners.
+  css: {
+    postcss: {},
+  },
   test: {
     environment: "jsdom",
     setupFiles: ["./tests/setup.ts"],
-    // Disable CSS processing — prevents vitest from loading postcss.config.mjs
-    // and pulling in platform-specific native binaries (lightningcss, rollup)
-    // that are absent from a Windows-generated package-lock.json on Linux runners.
     css: false,
   },
 });
