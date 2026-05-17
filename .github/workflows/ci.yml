@@ -11,12 +11,31 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: npm
-      - run: npm ci
-      - run: npm run lint
-      - run: npm run typecheck
-      - run: npm test
-      - run: npm run build
+          # No cache — avoids restoring stale node_modules missing
+          # Linux-specific optional binaries (e.g. @rollup/rollup-linux-x64-gnu)
+
+      - name: Install dependencies
+        run: npm install --include=optional
+
+      - name: Generate Prisma client
+        run: npm run db:generate -w frontend
+
+      - name: Lint
+        run: npm run lint -w frontend
+
+      - name: Typecheck
+        run: npm run typecheck -w frontend
+
+      - name: Unit tests
+        run: npm test -w frontend
+
+      - name: Build
+        run: npm run build -w frontend
+        env:
+          # Prisma adapter needs a non-empty URL to construct the client at build time.
+          # The actual DB is not used during next build (all routes are force-dynamic).
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/stellarfreight
