@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+
 import { createShipmentId, createTrackingCode, toShipmentStatusLabel } from "@/lib/shipment/utils";
 
 describe("shipment utils", () => {
