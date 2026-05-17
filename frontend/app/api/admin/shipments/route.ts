@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 import { requireAdminSession } from "@/lib/auth/session";
+
+export const dynamic = "force-dynamic";
 import { createShipment, listShipments } from "@/lib/shipments/repository";
 import { shipmentFormSchema } from "@/lib/shipment/schema";
 import { createShipmentId, createTrackingCode } from "@/lib/shipment/utils";

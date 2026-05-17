@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/db/client";
+
+export const dynamic = "force-dynamic";
 import { createAdminSession } from "@/lib/auth/session";
 import { verifyPassword } from "@/lib/auth/password";
 import { loginSchema } from "@/lib/shipment/auth-schema";
