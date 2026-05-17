@@ -16,13 +16,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: npm
           cache-dependency-path: package-lock.json
-      - run: npm ci
-      - run: npm run lint
+
+      # npm install (not ci) so platform-specific optional deps are resolved
+      # correctly on Linux regardless of where the lockfile was generated.
+      - name: Install dependencies
+        run: npm install
+
+      - name: Lint
+        run: npm run lint
         working-directory: frontend
 
   typecheck:
@@ -30,13 +37,24 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: npm
           cache-dependency-path: package-lock.json
-      - run: npm ci
-      - run: npm run typecheck
+
+      - name: Install dependencies
+        run: npm install
+
+      # Prisma 7 does not auto-generate types on install — must run explicitly
+      # before TypeScript can resolve @prisma/client exports.
+      - name: Generate Prisma client
+        run: npx prisma generate
+        working-directory: frontend
+
+      - name: Typecheck
+        run: npm run typecheck
         working-directory: frontend
 
   test:
@@ -44,11 +62,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: npm
           cache-dependency-path: package-lock.json
-      - run: npm ci
-      - run: npm test
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Test
+        run: npm test
         working-directory: frontend
