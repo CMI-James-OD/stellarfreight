@@ -7,12 +7,12 @@ export default defineConfig({
       "@": path.resolve(__dirname, "."),
     },
   },
-  // Disable CSS processing — prevents vitest from loading postcss.config.mjs
-  // and pulling in platform-specific native binaries (lightningcss, rollup)
-  // that are absent from a Windows-generated package-lock.json on Linux runners.
-  css: false,
   test: {
     environment: "jsdom",
     setupFiles: ["./tests/setup.ts"],
+    // Disable CSS processing — prevents vitest from loading postcss.config.mjs
+    // and pulling in platform-specific native binaries (lightningcss, rollup)
+    // that are absent from a Windows-generated package-lock.json on Linux runners.
+    css: false,
   },
 });
