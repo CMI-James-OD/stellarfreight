@@ -20,17 +20,17 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: npm
-          cache-dependency-path: package-lock.json
+          # No npm cache — avoids restoring Windows-generated node_modules
+          # that are missing Linux-specific optional binaries (e.g. rollup)
 
-      # npm install (not ci) so platform-specific optional deps are resolved
-      # correctly on Linux regardless of where the lockfile was generated.
+      # --include=optional forces platform-specific optional deps (rollup native)
       - name: Install dependencies
-        run: npm install
+        run: npm install --include=optional
 
+      # Use workspace flag (-w) to target frontend scripts from repo root —
+      # avoids working-directory confusion with npm workspace resolution
       - name: Lint
-        run: npm run lint
-        working-directory: frontend
+        run: npm run lint -w frontend
 
   typecheck:
     name: Typecheck
@@ -41,21 +41,16 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: npm
-          cache-dependency-path: package-lock.json
 
       - name: Install dependencies
-        run: npm install
+        run: npm install --include=optional
 
-      # Prisma 7 does not auto-generate types on install — must run explicitly
-      # before TypeScript can resolve @prisma/client exports.
+      # Prisma 7 does not auto-generate types — required before tsc
       - name: Generate Prisma client
-        run: npx prisma generate
-        working-directory: frontend
+        run: npm run db:generate -w frontend
 
       - name: Typecheck
-        run: npm run typecheck
-        working-directory: frontend
+        run: npm run typecheck -w frontend
 
   test:
     name: Unit Tests
@@ -66,12 +61,9 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: npm
-          cache-dependency-path: package-lock.json
 
       - name: Install dependencies
-        run: npm install
+        run: npm install --include=optional
 
       - name: Test
-        run: npm test
-        working-directory: frontend
+        run: npm test -w frontend
