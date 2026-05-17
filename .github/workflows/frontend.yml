@@ -65,12 +65,5 @@ jobs:
       - name: Install dependencies
         run: npm install --include=optional
 
-      # The root package-lock.json is generated on Windows and omits
-      # @rollup/rollup-linux-x64-gnu (Linux native binary required by vitest).
-      # npm has a known bug where it doesn't reinstall platform-specific
-      # optional deps from a cross-platform lockfile. Install it explicitly.
-      - name: Install Linux rollup native binary
-        run: npm install @rollup/rollup-linux-x64-gnu --no-save
-
       - name: Test
         run: npm test -w frontend

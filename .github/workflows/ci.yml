@@ -30,13 +30,6 @@ jobs:
       - name: Typecheck
         run: npm run typecheck -w frontend
 
-      # The root package-lock.json is generated on Windows and omits
-      # @rollup/rollup-linux-x64-gnu (Linux native binary required by vitest).
-      # npm has a known bug where it doesn't reinstall platform-specific
-      # optional deps from a cross-platform lockfile. Install it explicitly.
-      - name: Install Linux rollup native binary
-        run: npm install @rollup/rollup-linux-x64-gnu --no-save
-
       - name: Unit tests
         run: npm test -w frontend
 
