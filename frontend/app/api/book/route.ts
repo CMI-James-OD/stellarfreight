@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
+
+export const dynamic = "force-dynamic";
 import { prisma } from "@/lib/db/client";
 import { createTrackingCode, createShipmentId } from "@/lib/shipment/utils";
 import { countries } from "@/lib/shipment/constants";

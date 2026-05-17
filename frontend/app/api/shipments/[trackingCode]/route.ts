@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { findShipmentByTrackingCode } from "@/lib/shipments/repository";
 
+export const dynamic = "force-dynamic";
+
 export async function GET(_: Request, { params }: { params: Promise<{ trackingCode: string }> }) {
   const { trackingCode } = await params;
   const shipment = await findShipmentByTrackingCode(trackingCode);
